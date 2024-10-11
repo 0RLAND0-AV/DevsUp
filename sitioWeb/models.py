@@ -23,7 +23,7 @@ class Usuario(models.Model):
 
 # Modelo Categoria
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=100,null= False ,blank=False)  # Nombre de la categoría (Madera, Ladrillo, etc.)
+    nombre = models.CharField(max_length=100, null=False, blank=False)
 
     class Meta:
         db_table = "Categorias"
@@ -32,6 +32,21 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class subCategoria(models.Model):
+    nombre = models.CharField(max_length=100,null= False ,blank=False)  # Nombre de la categoría (Madera, Ladrillo, etc.)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name="subcategorias",null=False)
+
+    class Meta:
+        db_table = "subCategorias"
+        verbose_name = "subCategoria"
+        verbose_name_plural = "subCategorias"
+
+    def __str__(self):
+        return self.nombre
+    
+
+
     
 class Departamento(models.Model):
     nombre = models.CharField(max_length=100,null= False ,blank=False)  # Nombre del departamento
@@ -74,7 +89,7 @@ class Producto(models.Model):
     descripcion = models.TextField(blank=True, null=True)  # Descripción del producto
     precio = models.DecimalField(max_digits=10, decimal_places=2,null= True ,blank=True)  # Precio del producto
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE,null= True ,blank=True)  # Relación con el usuario
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null= True ,blank=True)  # Relación con la categoría
+    subcategoria = models.ForeignKey(subCategoria, on_delete=models.CASCADE,null= True ,blank=True)  # Relación con la categoría
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, null=True, blank=True)  # Relación con la provincia
     estado = models.ForeignKey(EstadoDelProducto, on_delete=models.CASCADE, null=True, blank=True)  # Relación con el estado del producto
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # Fecha y hora de creación del producto

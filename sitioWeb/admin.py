@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Usuario , Categoria , Producto , Imagenes ,Departamento,Provincia,EstadoDelProducto,CarritoProducto
+from .models import Usuario ,Categoria, subCategoria , Producto , Imagenes ,Departamento,Provincia,EstadoDelProducto,CarritoProducto
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
@@ -7,15 +7,21 @@ class UserAdmin(admin.ModelAdmin):
     list_display =["nombre","correo"] #lo que se va mostrar
 admin.site.register(Usuario,UserAdmin)#forma para registrar 1
 
+
 @admin.register(Categoria)#forma para registrar 2
 class CategoriaAdmin(admin.ModelAdmin):#lo que se puede editar
-    fields=["nombre"]
+    fields=["nombre" ,""]
     list_display =["nombre"]
+
+@admin.register(subCategoria)#forma para registrar 2
+class subCategoriaAdmin(admin.ModelAdmin):#lo que se puede editar
+    fields=["nombre","categoria"]
+    list_display =["nombre","categoria"]
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    fields=["nombre","descripcion","precio","usuario","categoria","provincia","estado"]
-    list_display =["nombre","precio","categoria"]
+    fields=["nombre","descripcion","precio","usuario","subcategoria","provincia","estado"]
+    list_display =["nombre","precio","subcategoria"]
 
 @admin.register(Imagenes)
 class ProductImageAdmin(admin.ModelAdmin):
