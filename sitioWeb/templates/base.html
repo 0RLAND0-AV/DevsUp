@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mi Tienda{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+    <link rel="stylesheet" href="{% static 'perfil.css' %}">
+    <link rel="stylesheet" href="{% static 'ofertar.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="https://placehold.co/50x50" alt="Logo" class="logo-img">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar productos...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="{% url 'base' %}" class="nav-link">Inicio</a> <!-- Asegúrate de tener la URL configurada -->
+                <a href=# class="nav-link">Carrito <span class="cart-count">0</span></a>
+                <!--<a href=# class="nav-link">Iniciar Sesion</a>-->
+                {% if request.session.user_id %}
+                <a href="{% url 'perfil' %}" class="nav-link"> {{ user.nombre }}</a>
+                {% else %}
+                    <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a> 
+                {% endif %}
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    <!-- Modal de Login -->
+    {% block contenidoLogin %}
+        <!--inicio de sesion -->
+        {% include 'login.html' %}
+    {% endblock %} 
+    <!-- Contenido principal -->
+
+
+    <main>
+        <!--aqui va el contenido -->
+        {% block asides %}
+            <!--categorias -->
+            {% include 'categorias.html' %}
+        {% endblock %} 
+
+        {% block contenidos %}
+            <!--publicaciones -->
+            {% include 'publicaciones.html' %}
+        {% endblock %} 
+        
+    </main>
+
+    <footer>
+        <p>© 2024 Mi Tienda. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{% static 'script.js' %}"></script>
+    <script src="{% static 'login.js' %}"></script>
+    <script src="{% static 'perfil.js' %}"></script>
+</body>
+</html>

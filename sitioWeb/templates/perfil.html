@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Perfil y Material
+{% endblock %}
+
+{% block asides %}
+    {% include 'cuenta.html' %}
+    <!--Mostrar materiales del usuario-->
+{% endblock %}
+{% block materiales %}
+    {% include 'materiales.html' %}
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static 'perfil.js' %}"></script>
+{% endblock %}

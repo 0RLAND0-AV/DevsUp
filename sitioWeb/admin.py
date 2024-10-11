@@ -1,0 +1,39 @@
+from django.contrib import admin
+from .models import Usuario , Categoria , Producto , Imagenes ,Departamento ,Provincia ,EstadoDelProducto
+
+# Register your models here.
+class UserAdmin(admin.ModelAdmin):
+    fields=["nombre","contraseña","correo","foto"]
+    list_display =["nombre","correo"] #lo que se va mostrar
+admin.site.register(Usuario,UserAdmin)#forma para registrar 1
+
+@admin.register(Categoria)#forma para registrar 2
+class CategoriaAdmin(admin.ModelAdmin):#lo que se puede editar
+    fields=["nombre"]
+    list_display =["nombre"]
+
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
+    fields=["nombre","descripcion","precio","usuario","categoria","provincia","estado"]
+    list_display =["nombre","precio","categoria"]
+
+@admin.register(Imagenes)
+class ProductImageAdmin(admin.ModelAdmin):
+    fields=["ruta","producto"]
+    list_display =["ruta","producto"]
+
+@admin.register(Departamento)
+class DepartamentoAdmin(admin.ModelAdmin):
+    fields=["nombre"]
+    list_display =["nombre"]
+
+@admin.register(Provincia)
+class ProvinciaAdmin(admin.ModelAdmin):
+    fields=["nombre","departamento"]
+    list_display =["nombre","departamento"]
+    
+@admin.register(EstadoDelProducto)
+class EstadoProductoAdmin(admin.ModelAdmin):
+    fields=["estado"]
+    list_display =["estado"]
+

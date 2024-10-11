@@ -1,0 +1,10 @@
+[33m1c19dc2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mkleber[m[33m)[m carga de datos al perfil
+[33mdaa8027[m implementacion de perfil para editar cuenta
+[33m9485a78[m iniciar secion con la base de datos (autenticacion)
+[33mc1be8d9[m integracion de registro de usuario con base de datos
+[33me4e3a5f[m implementacion del front de inicio de sesion y registro
+[33mfca0fe1[m implementacion de la esctructura base de la pag
+[33m08ee966[m configuraciones necesarias para la base de datos y admin
+[33m15f1660[m modificacion de models.py y admin.py
+[33ma3c8641[m[33m ([m[1;32mdevelop[m[33m)[m cambie nombre de la base de datos , cree una app y superUsuario
+[33m72c98a8[m integracion de django

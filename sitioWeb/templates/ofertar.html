@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Ofertar Material
+{% endblock %}
+
+{% block asides %}
+    {% include 'cuenta.html' %}
+{% endblock %}
+{% block contenidos %}
+
+<div class="container2">
+    <h1>Ofertar Material</h1>
+    <form>
+        <div class="form-group">
+            <label for="provincia">Provincia:</label>
+            <select id="provincia" required>
+                <option value="">Seleccionar Provincia</option>
+                <option value="buenos-aires">Buenos Aires</option>
+                <option value="cordoba">Córdoba</option>
+                <option value="santa-fe">Santa Fe</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" placeholder="https://www.google.com/maps/" required>
+        </div>
+
+        <div class="form-group">
+            <label for="tipo-material">Tipo de Material:</label>
+            <select id="tipo-material" required>
+                <option value="">Seleccionar Categoría</option>
+                <option value="cemento">Cemento</option>
+                <option value="arena">Arena</option>
+                <option value="ladrillos">Ladrillos</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="cantidad">Cantidad (Opcional):</label>
+            <input type="number" id="cantidad" placeholder="Ingresar Cantidad">
+        </div>
+
+        <div class="form-group">
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" placeholder="Precio Total (Bs)" required>
+        </div>
+
+        <div class="form-group">
+            <label for="archivo">Subir Archivo(s):</label>
+            <input type="file" id="archivo" class="file-input" multiple>
+        </div>
+
+        <div class="form-group">
+            <label for="estado">Estado (Opcional):</label>
+            <select id="estado">
+                <option value="">Seleccionar Estado</option>
+                <option value="nuevo">Nuevo</option>
+                <option value="usado">Usado</option>
+                <option value="reacondicionado">Reacondicionado</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" placeholder="Ingrese una descripción detallada del material"></textarea>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="terminos" required>
+            <label for="terminos">Acepto las Condiciones del servicio y la Política de Privacidad</label>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary">Ofertar</button>
+            <button type="button" class="btn btn-secondary">Cancelar</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'perfil.js' %}"></script>
+{% endblock %}
