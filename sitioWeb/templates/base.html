@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{% static 'perfil.css' %}">
     <link rel="stylesheet" href="{% static 'ofertar.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
 
@@ -29,17 +31,17 @@
                 <img src="{% static 'LogoIS_Oficial.png' %}" alt="Logo" class="logo-img">
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="Buscar productos...">
+                <input class="inputBuscar" type="text" placeholder="Buscar productos...">
                 <button><i class="fas fa-search"></i></button>
             </div>
             <div class="nav-links" id="navLinks">
-                <a href="{% url 'base' %}" class="nav-link">Inicio</a> <!-- Asegúrate de tener la URL configurada -->
-                <a href=# class="nav-link">Carrito <span class="cart-count">0</span></a>
+                <a href="{% url 'base' %}" class="nav-link">Inicio <ion-icon name="home-outline"></ion-icon></a> <!-- Asegúrate de tener la URL configurada -->
+                <a href=# class="nav-link">Carrito <span class="cart-count">0</span><ion-icon name="cart-outline"></ion-icon></a>
                 <!--<a href=# class="nav-link">Iniciar Sesion</a>-->
                 {% if request.session.user_id %}
                 <a href="{% url 'perfil' %}" class="nav-link"> {{ user.nombre }}</a>
                 {% else %}
-                    <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a> 
+                    <a href="#" class="nav-link" id="loginBtn">Login</a> 
                 {% endif %}
             </div>
             <div class="hamburger" id="hamburger">
