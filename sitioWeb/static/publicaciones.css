@@ -1,13 +1,13 @@
-.content {
+.contentP {
     flex: 3;
 }
 
-.content h1 {
+.contentP h1 {
     color: var(--primary-color);
     margin-bottom: 1rem;
 }
 
-.content p {
+.contentP p {
     margin-bottom: 1rem;
 }
 
@@ -59,7 +59,6 @@
     .categories {
         order: -1;
     }
-
     .product-grid {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
