@@ -2,27 +2,18 @@
     <h1>Los Mejores Materiales para Tu Construcción</h1>
     <p>Calidad garantizada a precios competitivos. ¡Compra ahora y recibe tu pedido en la puerta de tu casa!</p>
     
-
     <div class="product-grid">
+        {% for producto in productos %}
         <div class="product-card">
-            <img src="https://placehold.co/200x200" alt="Cemento">
-            <h3>Cemento</h3>
-            <a href="#" class="info-button">Más información</a>
+            <img src="{{ producto.imagenes.first.ruta.url }}" alt="{{ producto.nombre }}">
+            <h3>{{ producto.nombre }}</h3>
+            <h2>{{ producto.categoria.nombre }}</h2>
+            <p>{{ producto.descripcion }}</p>
+            <span class="precio">{{ producto.precio }} Bs</span>
+            <a href="#" class="info-button">Agregar al Carrito</a>
         </div>
-        <div class="product-card">
-            <img src="https://placehold.co/200x200" alt="Ladrillo">
-            <h3>Ladrillo</h3>
-            <a href="#" class="info-button">Más información</a>
-        </div>
-        <div class="product-card">
-            <img src="https://placehold.co/200x200" alt="Canaletas">
-            <h3>Canaletas</h3>
-            <a href="#" class="info-button">Más información</a>
-        </div>
-        <div class="product-card">
-            <img src="https://placehold.co/200x200" alt="Bloques de Cemento">
-            <h3>Bloques de Cemento</h3>
-            <a href="#" class="info-button">Más información</a>
-        </div>
+        {% empty %}
+        <p>No hay productos disponibles en este momento.</p>
+        {% endfor %}
     </div>
 </section>
