@@ -31,8 +31,9 @@
                 <img src="{% static 'LogoIS_Oficial.png' %}" alt="Logo" class="logo-img">
             </div>
             <div class="search-bar">
-                <input class="inputBuscar" type="text" placeholder="Buscar productos...">
-                <button><i class="fas fa-search"></i></button>
+                <input class="inputBuscar" id="inputBuscar" type="text" placeholder="Buscar productos...">
+                <button onclick="buscarProducto()"><i class="fas fa-search"></i></button>
+                <p id="noResultMessage" style="display: none; color: red;">No se encontró ningún producto con ese nombre.</p>
             </div>
             <div class="nav-links" id="navLinks">
                 <a href="{% url 'base' %}" class="nav-link">Inicio <ion-icon name="home-outline"></ion-icon></a> <!-- Asegúrate de tener la URL configurada -->
@@ -81,5 +82,6 @@
     <script src="{% static 'script.js' %}"></script>
     <script src="{% static 'login.js' %}"></script>
     <script src="{% static 'perfil.js' %}"></script>
+    <script src="{% static 'buscadorProductos.js' %}"></script>
 </body>
 </html>

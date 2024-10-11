@@ -262,12 +262,12 @@ footer {
         border: 1px;
         margin: 1px;
     }
-
     .hamburger {
         display: flex;
         order: 1;
         padding: 5px;
     }
+
 
     main {
         flex-direction: column;
