@@ -34,6 +34,7 @@ def login_view(request):
             return redirect('base')  # Redirige a la página principal
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
+            return redirect('base')  # Redirige a la página principal
     
     return render(request, 'base.html')
 
@@ -120,12 +121,3 @@ def ofertarMView(request):
         user.save()  # Guarda los cambios en la base de datos
     return render(request,'ofertar.html',{'user': user})
 
-def productos_view(request):
-    user_id = request.session.get('user_id')
-    user = None
-    if user_id:
-        user = Usuario.objects.get(idUsuario=user_id)
-    
-    productos = Producto.objects.all()  # Obtener todos los productos de la base de datos
-
-    return render(request, "publicaciones.html", {'user': user, 'productos': productos})

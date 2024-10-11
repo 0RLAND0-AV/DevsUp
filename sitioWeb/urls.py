@@ -9,7 +9,6 @@ from .views import(
     perfil_view ,
     logout_request,
     ofertarMView ,
-    productos_view,
 ) # Asegúrate de importar tu vista
 from django.contrib.auth import views as auth_views
 
@@ -20,7 +19,6 @@ urlpatterns = [
     path('perfil/', perfil_view, name='perfil'),
     path('logout/',logout_request, name='logout'),#logout --es salirce o cerrar sesion
     path('ofertar/',ofertarMView,name = 'ofertar'),
-    path('productos/', productos_view, name='productos'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
