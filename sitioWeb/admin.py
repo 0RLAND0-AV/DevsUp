@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Usuario , Categoria , Producto , Imagenes ,Departamento ,Provincia ,EstadoDelProducto
+from .models import Usuario , Categoria , Producto , Imagenes ,Departamento,Provincia,EstadoDelProducto,CarritoProducto
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
-    fields=["nombre","contraseña","correo","foto"]
+    fields=["nombre","contraseña","correo","celular","foto","estadoUsuario"]
     list_display =["nombre","correo"] #lo que se va mostrar
 admin.site.register(Usuario,UserAdmin)#forma para registrar 1
 
@@ -37,3 +37,7 @@ class EstadoProductoAdmin(admin.ModelAdmin):
     fields=["estado"]
     list_display =["estado"]
 
+@admin.register(CarritoProducto)
+class CarritoAdmin(admin.ModelAdmin):
+    fields=["usuario","producto"]
+    list_display=["usuario","producto"]

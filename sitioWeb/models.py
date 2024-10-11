@@ -1,14 +1,17 @@
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 
 # Modelo Usuario
 class Usuario(models.Model):
     idUsuario = models.AutoField(primary_key=True,null= False ,blank=False)  # Identificador único del usuario
-    nombre = models.CharField(max_length=100,null= True ,blank=True)  # Nombre del usuario
-    contraseña = models.CharField(max_length=100,null= True ,blank=True)  # Contraseña del usuario
-    correo = models.EmailField(unique=True,null= True ,blank=False)  # Correo único
+    nombre = models.CharField(max_length=100,null= False ,blank=False)  # Nombre del usuario
+    contraseña = models.CharField(max_length=100,null= False ,blank=False,default='00000000')  # Contraseña del usuario
+    correo = models.EmailField(unique=True,null= False ,blank=False,)  # Correo único
+    celular = models.CharField(max_length=15, null=True, blank=True)  # Campo nuevo para celular
     foto = models.ImageField(upload_to='fotos/', blank=True, null=True)  # Foto de perfil
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # Fecha y hora de creación
+    estadoUsuario = models.BooleanField(default=True)  # Estado del usuario (habilitado o no)
 
     class Meta:
         db_table = "Usuarios"
@@ -20,7 +23,7 @@ class Usuario(models.Model):
 
 # Modelo Categoria
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=100)  # Nombre de la categoría (Madera, Ladrillo, etc.)
+    nombre = models.CharField(max_length=100,null= False ,blank=False)  # Nombre de la categoría (Madera, Ladrillo, etc.)
 
     class Meta:
         db_table = "Categorias"
@@ -31,7 +34,7 @@ class Categoria(models.Model):
         return self.nombre
     
 class Departamento(models.Model):
-    nombre = models.CharField(max_length=100)  # Nombre del departamento
+    nombre = models.CharField(max_length=100,null= False ,blank=False)  # Nombre del departamento
 
     class Meta:
         db_table = "Departamentos"
@@ -67,14 +70,15 @@ class EstadoDelProducto(models.Model):
 
 # Modelo Producto
 class Producto(models.Model):
-    nombre = models.CharField(max_length=100 ,null= True ,blank=True)  # Nombre del producto
+    nombre = models.CharField(max_length=100 ,null= False ,blank=False)  # Nombre del producto
     descripcion = models.TextField(blank=True, null=True)  # Descripción del producto
     precio = models.DecimalField(max_digits=10, decimal_places=2,null= True ,blank=True)  # Precio del producto
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE,null= True ,blank=True)  # Relación con el usuario
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,null= True ,blank=True)  # Relación con la categoría
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, null=True, blank=True)  # Relación con la provincia
     estado = models.ForeignKey(EstadoDelProducto, on_delete=models.CASCADE, null=True, blank=True)  # Relación con el estado del producto
-
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # Fecha y hora de creación del producto
+    estado_producto = models.BooleanField(default=True,null=True, blank=True)  # Estado del producto (activo o inactivo)
 
     class Meta:
         db_table = "Productos"
@@ -97,3 +101,16 @@ class Imagenes(models.Model):
     def __str__(self):
         return f"Imagen de {self.producto.nombre}"
     
+    
+# Modelo CarritoProducto (relaciona usuarios y productos)
+class CarritoProducto(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='productos_en_carrito')  # Relación con el usuario
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='usuarios_en_carrito')  # Relación con el producto  
+
+    class Meta:
+        db_table = "Carrito_Productos"
+        verbose_name = "Producto en Carrito"
+        verbose_name_plural = "Productos en Carrito"
+
+    def __str__(self):
+        return f"{self.producto.nombre} en el carrito de {self.usuario.nombre}"
