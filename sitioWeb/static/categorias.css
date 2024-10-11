@@ -1,0 +1,35 @@
+.categories {
+    flex: 1;
+    background-color: var(--white);
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.categories h2 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.categories ul {
+    list-style-type: none;
+}
+
+.categories ul li {
+    margin-bottom: 0.5rem;
+}
+
+.categories ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.categories ul li a.active {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.categories ul ul {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+}
