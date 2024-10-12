@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import path
 from django.contrib import admin
-from .models import Usuario , Producto
+from .models import Usuario , Producto ,Categoria
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login ,logout , authenticate
 from django.contrib import messages
@@ -15,8 +15,9 @@ def baseView(request):
     user = None
     if user_id:
         user = Usuario.objects.get(idUsuario=user_id)
-    productos = Producto.objects.all()    
-    return render(request, "base.html",{'user': user, 'productos': productos})
+    productos = Producto.objects.all() 
+    categorias = Categoria.objects.prefetch_related('subcategorias').all()  # Obtiene todas las categorías y sus subcategorías   
+    return render(request, "base.html",{'user': user, 'productos': productos, 'categorias': categorias})
 
 def login_view(request):
     if request.method == 'POST':
