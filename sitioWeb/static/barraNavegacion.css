@@ -20,14 +20,16 @@
     flex-shrink: 0;  /* Evita que el logo se reduzca */
     cursor: pointer;
 }
-.logo:hover .logo-img {
-    filter: drop-shadow(2px 2px 2px white);
-}
 
 .logo-img {
     width: 50px;
     height: 50px;
 }
+
+.logo:hover .logo-img {
+    filter: drop-shadow(2px 2px 2px white);
+}
+
 .logo:hover .logo-img {
     filter: drop-shadow(2px 2px 2px white);
 }
@@ -44,8 +46,9 @@
 .search-bar input {
     padding: 0.5rem;
     border: none;
-    border-radius: 4px 0 0 4px;
+    border-radius: 30px 30px 30px 30px;
     width: 100%;  /* Ocupa todo el espacio disponible */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 .search-bar button {
@@ -54,10 +57,14 @@
     border: none;
     color: var(--white);
     cursor: pointer;
-    border-radius: 0 4px 4px 0;
+    border-radius: 30px 30px 30px 30px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
     flex-shrink: 0;  /* Evita que el botón se reduzca */
+    transition: background-color 0.3s;
 }
-
+.search-bar button:hover {
+    background-color: #004d3a; /* Color más oscuro al pasar el cursor */
+}
 .nav-links {
     display: flex;
     gap: 1rem;
@@ -69,14 +76,46 @@
     color: var(--white);
     text-decoration: none;
     white-space: nowrap;  /* Evita que los enlaces se partan en dos líneas */
-}
+    padding: 0.5rem 1rem; /* Espaciado interno */
+    border-radius: 30px; /* Bordes redondeados */
+    background-color: var(--secondary-color);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombra alrededor */
+    transition: background-color 0.3s, transform 0.1s;
 
+
+    display: flex;               /* Alinea los elementos horizontalmente */
+    align-items: center;          /* Alinea verticalmente al centro */
+    gap: 0.5rem;                  /* Espacio entre la imagen y el nombre */
+    text-decoration: none;
+    color: var(--white);          /* Color del texto */
+    font-size: 1rem;              /* Tamaño del texto */
+
+
+
+
+}
+.nav-link:hover {
+    background-color: #004d3a; /* Cambia de color al pasar el cursor */
+    transform: scale(1.05); /* Pequeño zoom */
+}
+.nav-links a {
+    margin-left: 1rem;            /* Espacio entre los enlaces del nav */
+}
 .cart-count {
     background-color: #ff4500;
     border-radius: 50%;
     padding: 2px 6px;
     font-size: 0.8em;
 }
+.profile-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;  /* Hace la imagen redonda */
+    object-fit: cover;   /* Asegura que la imagen se ajuste correctamente */
+    margin-right: 8px;   /* Espacio entre la imagen y el nombre/enlace */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra alrededor */
+}
+
 
 .hamburger {
     display: none;
@@ -93,8 +132,9 @@
 }
 
 /* Responsive para pantallas pequeñas */
-@media (max-width: 450px) {
+@media (max-width: 750px) {
     .navbar {
+        flex-wrap: wrap;
         flex-direction: column;
         align-items: center; /* Centra todos los elementos */
     }
@@ -105,6 +145,7 @@
 
     .search-bar {
         width: 100%;
+        order: 2;
         margin-bottom: 1rem;
     }
 
@@ -112,6 +153,9 @@
         display: none;
         flex-direction: column;
         width: 100%;
+        order: 4; /* Los enlaces van al final */
+        background-color: var(--primary-color);
+        padding: 1rem;
     }
 
     .nav-links.active {
@@ -120,5 +164,6 @@
 
     .hamburger {
         display: flex;
+        order: 3;/* Mueve el botón hamburguesa al final */
     }
 }
