@@ -43,15 +43,16 @@
 
     <main>
         <!--aqui va el contenido -->
-        {% block asides %}
-            <!--categorias -->
-            {% include 'categorias.html' %}
-        {% endblock %} 
-
         {% block contenidos %}
-            <!--publicaciones -->
-            {% include 'publicaciones.html' %}
-        {% endblock %} 
+        <!-- Contenido por defecto (para otras páginas) -->
+            {% block categorias %}
+                {% include 'categorias.html' %}
+            {% endblock %}
+
+            {% block publicaciones %}
+                {% include 'publicaciones.html' %}
+            {% endblock %}
+    {% endblock %} 
         
     </main>
 

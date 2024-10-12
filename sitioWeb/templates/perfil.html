@@ -2,16 +2,15 @@
 {% load static %}
 
 {% block title %}
-Perfil y Material
+Perfil
 {% endblock %}
 
-{% block asides %}
+{% block contenidos %}
     {% include 'cuenta.html' %}
-    <!--Mostrar materiales del usuario-->
 {% endblock %}
-{% block materiales %}
+<!--{% block materiales %}
     {% include 'materiales.html' %}
-{% endblock %}
+{% endblock %}-->
 {% block extra_js %}
     <script src="{% static 'perfil.js' %}"></script>
 {% endblock %}
