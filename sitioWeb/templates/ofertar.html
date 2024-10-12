@@ -47,12 +47,7 @@ Ofertar Material
             <select id="material" name="material" required>
                 <option value="" disabled selected>Seleccionar Categoría</option>
                 
-                <optgroup label="Cemento">
-                    <option value="coboce">Coboce</option>
-                    <option value="emisa">Emisa</option>
-                    <option value="camba">Camba</option>
-                    <option value="soboce">Soboce</option>
-                </optgroup>
+               
                 
                 <optgroup label="Acero">
                     <option value="laminas">Láminas</option>
@@ -94,11 +89,20 @@ Ofertar Material
 
             </div>
         </div>
-        <div>
+
+        <div class="custom-file-upload">
             <label for="archivo">Subir Archivo(s):</label>
             <input type="file" id="archivo" name="archivo" required accept=".png, .jpeg" multiple>
-            
+            <label for="archivo" class="custom-file-button">Seleccionar archivo(s)</label>
+            <span id="file-name">No se ha seleccionado archivo</span>
         </div>
+        
+        <div id="preview-container" class="preview-container">
+            <!-- Aquí se mostrarán las miniaturas -->
+        </div>
+
+
+
         <div>
             <label for="estado">(Opcional) Estado:</label>
             <select id="estado" name="estado">
@@ -111,7 +115,7 @@ Ofertar Material
         </div>
         <div class="form-group">
             <label for="descripcion">Descripcion:</label>
-            <textarea id="descripcion" name="descripcion" placeholder="Añade una pequeña descripcion..." rows="2" maxlength="250"> 
+            <textarea id="descripcion" name="descripcion" required placeholder="Añade una pequeña descripcion..." rows="2" maxlength="250"> 
             </textarea>
             
         </div>
@@ -120,8 +124,8 @@ Ofertar Material
             <label for="terminos">Acepto las Condiciones del servicio y la Política de Privacidad</label>
         </div>
         <div class="button-group">
-            <button type="submit" class="btn btn-primary">Ofertar</button>
-            <button type="button" class="btn btn-secondary">Cancelar</button>
+            <button type="submit" class="btn btn-primary" id="button-ofertar" disabled>Ofertar</button>
+            <button type="button" class="btn btn-secondary" id="button-cancelar">Cancelar</button>
         </div>
     </form>
 </div>
