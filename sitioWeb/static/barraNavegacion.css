@@ -1,10 +1,23 @@
 .navbar {
+    position: fixed;  /* Fija la barra en la parte superior */
+    top: 0;
+    left: 0;
+    width: 100%;  /* La barra ocupará todo el ancho */
     background-color: var(--primary-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
     color: var(--white);
+    z-index: 1000;
+    flex-wrap: nowrap; /* Evita que los elementos salten a nuevas líneas */
+    overflow: hidden;  /* Asegura que no haya desbordamientos */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;  /* Evita que el logo se reduzca */
 }
 
 .logo-img {
@@ -16,15 +29,16 @@
     display: flex;
     align-items: center;
     flex-grow: 1;
-    margin: 0 2rem;
+    margin: 0 1rem;
+    max-width: 500px;  /* Ajusta el ancho máximo del buscador */
+    min-width: 0;
 }
 
 .search-bar input {
     padding: 0.5rem;
     border: none;
     border-radius: 4px 0 0 4px;
-    width: 100%;
-    max-width: 400px;
+    width: 100%;  /* Ocupa todo el espacio disponible */
 }
 
 .search-bar button {
@@ -34,16 +48,20 @@
     color: var(--white);
     cursor: pointer;
     border-radius: 0 4px 4px 0;
+    flex-shrink: 0;  /* Evita que el botón se reduzca */
 }
 
 .nav-links {
     display: flex;
     gap: 1rem;
+    flex-wrap: nowrap; /* Los enlaces no deben saltar a nuevas líneas */
+    align-items: center;
 }
 
 .nav-link {
     color: var(--white);
     text-decoration: none;
+    white-space: nowrap;  /* Evita que los enlaces se partan en dos líneas */
 }
 
 .cart-count {
@@ -65,4 +83,35 @@
     background-color: var(--white);
     margin: 2px 0;
     transition: 0.4s;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 450px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center; /* Centra todos los elementos */
+    }
+
+    .logo {
+        margin-bottom: 1rem;
+    }
+
+    .search-bar {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
 }
