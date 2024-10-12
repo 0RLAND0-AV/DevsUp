@@ -21,18 +21,6 @@ body {
     background-color: var(--background-color);
 }
 
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--primary-color);
-    z-index: 1000;
-    padding: 1rem; /* Ajusta el padding según sea necesario */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
 main {
     display: flex;
@@ -55,5 +43,13 @@ footer {
     main {
         padding-top: 100px;
         flex-direction: column;
+        margin-top: 0px; 
+    }
+}
+@media (max-width: 450px) {
+    main {
+        padding-top: 100px;
+        flex-direction: column;
+        margin-top: 80px; 
     }
 }
