@@ -45,14 +45,12 @@ const validarArchivos = () => {
             footer: '<label> Archivos validos[.jpg, .jpeg] que no pesen mas de 2mb</>' // Puedes personalizar el footer o quitarlo
         });
     }
-
     // Mostrar nombres de archivos seleccionados en el elemento <span>
     if (validFiles.length > 0) {
         fileNameDisplay.textContent = `Archivos seleccionados: ${validFiles.map(file => file.name).join(', ')}`;
     } else {
         fileNameDisplay.textContent = "No se ha seleccionado archivo válido";
     }
-
     return validFiles.length > 0; // Retorna true si hay archivos válidos
 };
 
@@ -60,58 +58,44 @@ const validarArchivos = () => {
 
 
 
-// Módulo de validación del formulario
-const validarFormulario = (event) => {
-    // Validar que haya al menos un archivo válido seleccionado
-    const archivosValidos = validarArchivos();
-    if (!archivosValidos) {
-        event.preventDefault(); // Cancelar envío si no hay archivos válidos
-        alert('Debes seleccionar al menos un archivo válido.');
-        return;
-    }
-
-    // Validar campos obligatorios
+// Habilitar o deshabilitar el botón de ofertar
+const actualizarEstadoBotonOfertar = () => {
+    const buttonOfertar = document.getElementById('button-ofertar');
     const provincia = document.getElementById('provincia').value;
     const urlMapa = document.getElementById('urlMapa').value;
     const material = document.getElementById('material').value;
     const precio = document.getElementById('precio').value;
+    const descripcion = document.getElementById('descripcion').value; // Nueva validación
+    const departamento = document.getElementById('departamento').value; // Nueva validación
     const terminos = document.getElementById('terminos').checked;
 
-    if (!provincia) {
-        alert('Debes seleccionar una provincia.');
-        event.preventDefault();
-        return;
-    }
+    const camposCompletos = provincia && urlMapa && material && precio > 0 && descripcion && departamento && terminos;
 
-    if (!urlMapa) {
-        alert('Debes ingresar una dirección válida.');
-        event.preventDefault();
-        return;
+    if (camposCompletos) {
+        buttonOfertar.disabled = false;
+        buttonOfertar.style.backgroundColor = '#006400'; // Verde oscuro
+    } else {
+        buttonOfertar.disabled = true;
+        buttonOfertar.style.backgroundColor = '#666'; // Verde claro (cuando está deshabilitado)
     }
-
-    if (!material) {
-        alert('Debes seleccionar un tipo de material.');
-        event.preventDefault();
-        return;
-    }
-
-    if (!precio || precio <= 0) {
-        alert('Debes ingresar un precio válido mayor a cero.');
-        event.preventDefault();
-        return;
-    }
-
-    if (!terminos) {
-        alert('Debes aceptar las condiciones del servicio y la Política de Privacidad.');
-        event.preventDefault();
-        return;
-    }
-
-    // Aquí puedes añadir otras validaciones del formulario si es necesario
 };
 
+// Módulo de validación del formulario y tardanza del envio del Form, tod para que se vea la alerta
+const validarFormulario = (event) => {
+    // Mostrar la alerta de éxito y retrasar el envío del formulario
+    event.preventDefault(); // Prevenir el envío del formulario
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Tu oferta fue publicada correctamente",
+        showConfirmButton: false,
+        timer: 1750 // 1.5 segundos
+    });
 
-
+    setTimeout(() => {
+        event.target.submit(); // Enviar el formulario después del tiempo de la alerta
+    }, 1750);
+};
 
 // Módulo de inicialización de eventos
 const inicializarEventos = () => {
@@ -139,24 +123,16 @@ const inicializarEventos = () => {
         }
         });
     });       
-    //Añadir reporte de JS al apretar el boton Ofertar
-    document.getElementById('button-ofertar').addEventListener('click', function() {
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Tu oferta fue guardada correctamente",
-            showConfirmButton: false,
-            timer: 1500
-        });
-    });  
 
-
-    
     // Asociar la validación de archivos al cambio del input de archivos
     document.getElementById('archivo').addEventListener('change', validarArchivos);
 
     // Asociar la validación completa del formulario al submit
     document.getElementById('ofertaForm').addEventListener('submit', validarFormulario);
+
+     // Habilitar y deshabilitar el botón de Ofertar según la validación
+    document.querySelectorAll('#provincia, #urlMapa, #material, #precio, #descripcion, #departamento, #terminos')
+    .forEach(input => input.addEventListener('input', actualizarEstadoBotonOfertar));
 
     // Asociar el cambio del departamento para actualizar las provincias
     document.getElementById('departamento').addEventListener('change', function() {
