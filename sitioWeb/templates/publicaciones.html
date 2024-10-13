@@ -2,7 +2,7 @@
     <h1>Los Mejores Materiales para Tu Construcción</h1>
     <p>Calidad garantizada a precios competitivos. ¡Compra ahora y recibe tu pedido en la puerta de tu casa!</p>
     
-    <<div class="product-grid" id="product-grid">
+    <div class="product-grid" id="product-grid">
         {% for producto in productos %}
         <div class="product-card" data-subcategoria-id="{{ producto.subcategoria.id }}">
             <img src="{{ producto.imagenes.first.ruta.url }}" alt="{{ producto.nombre }}">
