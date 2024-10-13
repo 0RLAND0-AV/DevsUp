@@ -33,67 +33,18 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombre
 
-class subCategoria(models.Model):
-    nombre = models.CharField(max_length=100,null= False ,blank=False)  # Nombre de la categoría (Madera, Ladrillo, etc.)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name="subcategorias",null=False)
-
-    class Meta:
-        db_table = "subCategorias"
-        verbose_name = "subCategoria"
-        verbose_name_plural = "subCategorias"
-
-    def __str__(self):
-        return self.nombre
-    
-
-
-    
-class Departamento(models.Model):
-    nombre = models.CharField(max_length=100,null= False ,blank=False)  # Nombre del departamento
-
-    class Meta:
-        db_table = "Departamentos"
-        verbose_name = "Departamento"
-        verbose_name_plural = "Departamentos"
-
-    def __str__(self):
-        return self.nombre
-
-class Provincia(models.Model):
-    nombre = models.CharField(max_length=100)  # Nombre de la provincia
-    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, related_name='provincias')  # Relación con el departamento
-
-    class Meta:
-        db_table = "Provincias"
-        verbose_name = "Provincia"
-        verbose_name_plural = "Provincias"
-
-    def __str__(self):
-        return self.nombre
-
-# Modelo EstadoDelProducto
-class EstadoDelProducto(models.Model):
-    estado = models.CharField(max_length=100)  # Estado del producto (nuevo, viejo, usado, seminuevo)
-
-    class Meta:
-        db_table = "EstadosDelProducto"
-        verbose_name = "Estado del Producto"
-        verbose_name_plural = "Estados del Producto"
-
-    def __str__(self):
-        return self.estado
-
 # Modelo Producto
 class Producto(models.Model):
     nombre = models.CharField(max_length=100 ,null= False ,blank=False)  # Nombre del producto
-    descripcion = models.TextField(blank=True, null=True)  # Descripción del producto
-    precio = models.DecimalField(max_digits=10, decimal_places=2,null= True ,blank=True)  # Precio del producto
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE,null= True ,blank=True)  # Relación con el usuario
-    subcategoria = models.ForeignKey(subCategoria, on_delete=models.CASCADE,null= True ,blank=True)  # Relación con la categoría
-    provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, null=True, blank=True)  # Relación con la provincia
-    estado = models.ForeignKey(EstadoDelProducto, on_delete=models.CASCADE, null=True, blank=True)  # Relación con el estado del producto
-    fecha_creacion = models.DateTimeField(auto_now_add=True)  # Fecha y hora de creación del producto
-    estado_producto = models.BooleanField(default=True,null=True, blank=True)  # Estado del producto (activo o inactivo)
+    departamento = models.CharField(max_length=100)
+    provincia = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=200)
+    subcategoria = models.CharField(max_length=100)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    descripcion = models.TextField()
+    estado = models.CharField(max_length=50, blank=True, null=True)
+    usuarioid = models.ForeignKey(Usuario, on_delete=models.CASCADE,null= True ,blank=True)  # Relación con el usuario
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "Productos"
@@ -102,6 +53,10 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+from django.db import models
+
 
 # Modelo Imagenes
 class Imagenes(models.Model):
@@ -117,15 +72,3 @@ class Imagenes(models.Model):
         return f"Imagen de {self.producto.nombre}"
     
     
-# Modelo CarritoProducto (relaciona usuarios y productos)
-class CarritoProducto(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='productos_en_carrito')  # Relación con el usuario
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='usuarios_en_carrito')  # Relación con el producto  
-
-    class Meta:
-        db_table = "Carrito_Productos"
-        verbose_name = "Producto en Carrito"
-        verbose_name_plural = "Productos en Carrito"
-
-    def __str__(self):
-        return f"{self.producto.nombre} en el carrito de {self.usuario.nombre}"

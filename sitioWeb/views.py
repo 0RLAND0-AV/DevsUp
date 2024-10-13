@@ -1,24 +1,24 @@
 from django.shortcuts import render, redirect
 from django.urls import path
 from django.contrib import admin
-from .models import Usuario , Producto ,Categoria
+from .models import Usuario, Producto, Categoria, Imagenes
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login ,logout , authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 
-# Create your views here.
+# Vista para la página principal
 def baseView(request):
     '''Esto es la pagina principal'''
-        
     user_id = request.session.get('user_id')
     user = None
     if user_id:
         user = Usuario.objects.get(idUsuario=user_id)
     productos = Producto.objects.all() 
     categorias = Categoria.objects.prefetch_related('subcategorias').all()  # Obtiene todas las categorías y sus subcategorías   
-    return render(request, "base.html",{'user': user, 'productos': productos, 'categorias': categorias})
+    return render(request, "base.html", {'user': user, 'productos': productos, 'categorias': categorias})
 
+# Vista para el inicio de sesión
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -39,6 +39,7 @@ def login_view(request):
     
     return render(request, 'base.html')
 
+# Vista para el registro de usuarios
 def registroView(request):
     if request.method == 'POST':
         # Obtener los datos del formulario
@@ -68,6 +69,7 @@ def registroView(request):
 
     return render(request, 'registro.html')
 
+# Vista para el perfil de usuario (no modificada como solicitaste)
 def perfil_view(request):
     user_id = request.session.get('user_id')
     
@@ -93,32 +95,50 @@ def perfil_view(request):
 
     return render(request, 'perfil.html', {'user': user})
 
+# Cerrar sesión
 def logout_request(request):
     logout(request)
     messages.info(request, "Saliste exitosamente")
     return redirect("base")
 
+# Vista para manejar el formulario de oferta y guardar imágenes
 def ofertarMView(request):
-    user_id = request.session.get('user_id')
-    
-    if not user_id:
-        return redirect('login')  # Redirigir al login si no está autenticado
-    
-    user = Usuario.objects.get(idUsuario=user_id)
-
     if request.method == 'POST':
-        # Si hay un archivo de imagen en la solicitud
-        if 'imagenPerfil' in request.FILES:
-            user.foto = request.FILES['imagenPerfil']  # Asigna la nueva imagen
-        
-        # Actualizar el nombre y el correo electrónico
-        user.nombre = request.POST.get('nombre', user.nombre)  # Obtiene el nuevo nombre, o mantiene el antiguo
-        user.correo = request.POST.get('correo', user.correo)  # Actualiza el correo electrónico
+        # Obtener el usuario que está en sesión
+        user_id = request.session.get('user_id')
+        user = Usuario.objects.get(idUsuario=user_id)
 
-        nueva_contraseña = request.POST.get('contraseña')
-        if nueva_contraseña:  # Si se proporcionó una nueva contraseña
-            user.contraseña = nueva_contraseña  # Asigna la nueva contraseña
+        # Obtener los datos del formulario
+        departamento = request.POST.get('departamento')
+        provincia = request.POST.get('provincia')
+        direccion = request.POST.get('urlMapa')
+        material = request.POST.get('material')
+        precio = request.POST.get('precio')
+        estado = request.POST.get('estado')
+        descripcion = request.POST.get('descripcion')
 
-        user.save()  # Guarda los cambios en la base de datos
-    return render(request,'ofertar.html',{'user': user})
+        # Crear el nuevo producto con los datos del formulario
+        producto = Producto(
+            nombre=user.nombre,  # Nombre del usuario que llena el formulario
+            departamento=departamento,
+            provincia=provincia,
+            direccion=direccion,
+            subcategoria=material,  # Asumiendo que 'material' es tu subcategoría
+            precio=precio,
+            descripcion=descripcion,
+            estado=estado,
+            usuarioid=user  # Relacionar el producto con el usuario actual
+        )
 
+        # Guardar el producto en la base de datos
+        producto.save()
+
+        # Guardar las imágenes subidas
+        for archivo in request.FILES.getlist('archivo'):
+            imagen = Imagenes(ruta=archivo, producto=producto)
+            imagen.save()
+
+        messages.success(request, '¡Oferta creada exitosamente!')
+        return redirect('base')  # Redirige a la página principal después de guardar
+
+    return render(request, 'ofertar.html')

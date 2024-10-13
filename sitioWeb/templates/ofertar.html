@@ -18,7 +18,8 @@ Ofertar Material
 {% block contenidos %}
 <div class="container2">
     <h1>Ofertar Material</h1>
-    <form id="ofertaForm">
+    <form id="ofertaForm" method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
         <div class="form-group inline">
             <label for="departamento">Departamento:</label>
             <select id="departamento" name="departamento" required>
