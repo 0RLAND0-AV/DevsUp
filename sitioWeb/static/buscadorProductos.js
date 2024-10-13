@@ -1,3 +1,10 @@
+// Escuchar el evento "keypress" en el campo de búsqueda para ejecutar la función al presionar Enter
+document.getElementById('inputBuscar').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        buscarProducto();
+    }
+});
+
 function buscarProducto() {
     // Obtener el valor del input
     const searchInput = document.getElementById('inputBuscar').value.toLowerCase();
@@ -29,5 +36,3 @@ function buscarProducto() {
         noResultMessage.style.display = "none";
     }
 }
-
-
