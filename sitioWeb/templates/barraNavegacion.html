@@ -14,13 +14,6 @@
     <div class="nav-links" id="navLinks">
         <a href="{% url 'base' %}" class="nav-link">Inicio</a> <!-- Asegúrate de tener la URL configurada -->
         <a href=# class="nav-link">Carrito <span class="cart-count">0</span></a>
-        <!--<a href=# class="nav-link">Iniciar Sesion</a>-->
-        {% if request.session.user_id %}
-        <a href="{% url 'perfil' %}" class="nav-link"> {{ user.nombre }}</a>
-        {% else %}
-            <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a> 
-        {% endif %}
-        
                 <!--<a href=# class="nav-link">Iniciar Sesion</a>-->
                 {% if request.session.user_id %}
                 <a href="{% url 'perfil' %}" class="nav-link">
