@@ -126,10 +126,11 @@ ion-icon{
 @media (max-width: 768px) {
     .navbar {
         display: flex;
-        justify-content: center;
+        justify-content:center ;
         align-items: center;
         flex-wrap: wrap;
-        padding: 5px;
+        height: 100px;
+        padding-top:6px;
     }
     .search-bar {
         order: 1;
