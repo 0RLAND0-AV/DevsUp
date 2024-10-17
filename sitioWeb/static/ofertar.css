@@ -1,6 +1,7 @@
 .container2 {
-    flex: 2;
-    /*width: max-content;*/
+    position: relative;
+    max-width: 800px; /* Establecer un ancho máximo */
+    width: 95%;
     margin: auto;
     background-color: #ffffff;
     padding: 25px;
@@ -9,7 +10,7 @@
 }
 
 h1 {
-    color: #006400;
+    color: var(--secondary-color);
     text-align: center;
     margin-bottom: 20px;
 }
@@ -55,7 +56,7 @@ input[type="file"] {
 .custom-file-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #006400;
+    background-color: var(--primary-color);
     color: white;
     border-radius: 5px;
     cursor: pointer;
@@ -66,7 +67,10 @@ input[type="file"] {
 }
 
 .custom-file-button:hover {
-    background-color: #F27405;
+    background-color: var(--secondary-color);
+}
+.custom-file-button:active{
+    background-color: var(--tertiary-color);
 }
 
 /* Estilo para mostrar el nombre del archivo seleccionado */
@@ -79,18 +83,20 @@ input[type="file"] {
 
 .preview-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* Cambiar a nowrap para evitar que se deformen */
     margin-top: 10px;
+    max-width: 100%; /* Limitar el ancho del contenedor de vista previa */
+    overflow-x: auto; /* Permitir desplazamiento horizontal si hay muchos archivos */
 }
-
 .preview-container img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+    max-width: 100px; /* Limitar el ancho máximo de las imágenes */
+    height: auto; /* Mantener la proporción de la imagen */
+    object-fit: cover; /* Mantener la proporción de la imagen */
     margin-right: 10px;
     border: 1px solid #ddd;
     padding: 5px;
 }
+
 
 
 .file-input {
@@ -126,11 +132,20 @@ input[type="file"] {
 }
 
 .btn-primary {
-    background-color: #006400;
+    background-color: #02735E; /* Color cuando está deshabilitado */
 }
 
+.btn-primary:disabled {
+    background-color: #666666; /* Mantenemos el mismo color */
+    opacity: 0.5; /* Opacidad al 50% para indicar que está deshabilitado */
+    pointer-events: none; /* Desactivar cualquier interacción con el botón */
+}
+
+
+
+
 .btn-secondary {
-    background-color: #666;
+    background-color: #c02323;
 }
 
 .btn:hover {
@@ -138,6 +153,7 @@ input[type="file"] {
 }
 
 @media (max-width: 600px) {
+    
     .form-group.inline {
         display: block; /* Usar flexbox para alinear elementos en línea */
         gap: 20px; /* Espacio entre los elementos */

@@ -1,24 +1,30 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import path
 from django.contrib import admin
-from .models import Usuario, Producto, Categoria, Imagenes
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login, logout
+from .models import Usuario , Producto ,Categoria,CarritoProducto , Departamento,Provincia,subCategoria,EstadoDelProducto,Imagenes
+from django.http import HttpResponse ,JsonResponse
+from django.contrib.auth import authenticate, login ,logout , authenticate
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 
-# Vista para la página principal
+# Create your views here.
 def baseView(request):
     '''Esto es la pagina principal'''
+        
     user_id = request.session.get('user_id')
     user = None
     if user_id:
         user = Usuario.objects.get(idUsuario=user_id)
     productos = Producto.objects.all() 
     categorias = Categoria.objects.prefetch_related('subcategorias').all()  # Obtiene todas las categorías y sus subcategorías   
-    return render(request, "base.html", {'user': user, 'productos': productos, 'categorias': categorias})
+    carritos = CarritoProducto.objects.filter(usuario=user)
+    return render(request, "base.html",{'user': user, 'productos': productos, 'categorias': categorias,'carritos': carritos})
 
-# Vista para el inicio de sesión
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -39,7 +45,6 @@ def login_view(request):
     
     return render(request, 'base.html')
 
-# Vista para el registro de usuarios
 def registroView(request):
     if request.method == 'POST':
         # Obtener los datos del formulario
@@ -69,7 +74,6 @@ def registroView(request):
 
     return render(request, 'registro.html')
 
-# Vista para el perfil de usuario (no modificada como solicitaste)
 def perfil_view(request):
     user_id = request.session.get('user_id')
     
@@ -77,6 +81,7 @@ def perfil_view(request):
         return redirect('login')  # Redirigir al login si no está autenticado
     
     user = Usuario.objects.get(idUsuario=user_id)
+    carritos = CarritoProducto.objects.filter(usuario=user)
 
     if request.method == 'POST':
         # Si hay un archivo de imagen en la solicitud
@@ -91,46 +96,136 @@ def perfil_view(request):
         if nueva_contraseña:  # Si se proporcionó una nueva contraseña
             user.contraseña = nueva_contraseña  # Asigna la nueva contraseña
 
+        nuevo_celular = request.POST.get('celular')
+        if nuevo_celular:  # Si se proporcionó una nueva contraseña
+            user.celular = nuevo_celular  # Asigna la nueva contraseña
+            
         user.save()  # Guarda los cambios en la base de datos
 
-    return render(request, 'perfil.html', {'user': user})
+    return render(request, 'perfil.html', {'user': user,'is_profile_page': True,'carritos': carritos})
 
-# Cerrar sesión
 def logout_request(request):
     logout(request)
     messages.info(request, "Saliste exitosamente")
     return redirect("base")
+#para eliminar
+#@login_required
+def eliminar_del_carrito(request, producto_id):
+    if request.method == "DELETE":
+        try:
+            #obtenemos al usuario primero
+            user_id = request.session.get('user_id')
+            user = Usuario.objects.get(idUsuario=user_id)
+            #obtenemos al carrito que quiere eliminar si hay un error nos mostrara la pagina 404
+            carrito_item = get_object_or_404(CarritoProducto, usuario=user, producto__id=producto_id)
+            carrito_item.delete()
+            mensaje = f"El producto ha sido eliminado del carrito."
 
-# Vista para manejar el formulario de oferta y guardar imágenes
+            # Recuperar todos los productos en el carrito
+            productos_en_carrito = CarritoProducto.objects.filter(usuario=user)
+            lista_productos = [{'id': item.producto.id, 'nombre': item.producto.nombre, 'precio': int(item.producto.precio)} for item in productos_en_carrito]
+
+            return JsonResponse({
+                'mensaje': mensaje,
+                'success': True,
+                'productos': lista_productos  # Enviar la lista de productos en el carrito
+            })
+        except Exception as e:
+            return JsonResponse({'mensaje': 'Error al eliminar el producto.', 'success': False}, status=500)
+
+    return JsonResponse({'mensaje': 'Método no permitido.', 'success': False}, status=405)
+
+
+@require_POST
+def agregar_al_carrito(request, producto_id):
+    print(f"Solicitud recibida: {request.method} para producto ID: {producto_id}")
+
+    if request.method == "POST":
+        try:
+            producto = get_object_or_404(Producto, id=producto_id)
+            print(f"Producto encontrado: {producto.nombre}")
+            user_id = request.session.get('user_id')
+            user = Usuario.objects.get(idUsuario=user_id)
+            print(f"Producto encontrado: {user.nombre}")
+
+            carrito_producto, created = CarritoProducto.objects.get_or_create(usuario=user, producto=producto)
+            print(f"Item del carrito {'creado' if created else 'ya existente'}: {carrito_producto}")
+
+            if created:
+                mensaje = f"El producto '{producto.nombre}' se agregó al carrito."
+            else:
+                mensaje = f"El producto '{producto.nombre}' ya está en tu carrito."
+
+            # Recuperar todos los productos en el carrito
+            productos_en_carrito = CarritoProducto.objects.filter(usuario=user)
+            lista_productos = [{'id': item.producto.id, 'nombre': item.producto.nombre, 'precio': int(item.producto.precio)} for item in productos_en_carrito]
+
+            print(f"Mensaje enviado: {mensaje}")
+            return JsonResponse({
+                'mensaje': mensaje,
+                'success': True,
+                'productos': lista_productos  # Enviar la lista de productos en el carrito
+            })
+
+        except Exception as e:
+            print(f"Error al agregar al carrito: {e}")
+            return JsonResponse({'mensaje': 'Error interno del servidor.', 'success': False}, status=500)
+
+    print("Método no permitido.")
+    return JsonResponse({'mensaje': 'Método no permitido.', 'success': False}, status=405)
+  
+# Vista para obtener provincias según el departamento seleccionado
+def cargar_provincias_por_departamento(request):
+    departamento_id = request.GET.get('departamento_id')
+    if departamento_id:
+        provincias = Provincia.objects.filter(departamento_id=departamento_id).values('id', 'nombre')
+        return JsonResponse({'provincias': list(provincias)}, status=200)
+    return JsonResponse({'error': 'No se encontraron provincias'}, status=404)
+
+#Esta funcion deberia manejar el formulario que esta en el archivo ofertar.html, En si ESTO IGUAL ES OTRO FORMULARIO, PERO ESTE DEBERIA GUARDAR LOS DATOS EN MI 
+from django.shortcuts import get_object_or_404
+
 def ofertarMView(request):
-    if request.method == 'POST':
-        # Obtener el usuario que está en sesión
-        user_id = request.session.get('user_id')
-        user = Usuario.objects.get(idUsuario=user_id)
+    # Obtener el usuario desde la sesión
+    user_id = request.session.get('user_id')
+    carritos = CarritoProducto.objects.filter(usuario=user_id)
+    # Si no hay usuario en sesión, redirigir al login
+    if not user_id:
+        return redirect('login')
 
+    # Obtener el usuario o lanzar un 404 si no existe
+    user = get_object_or_404(Usuario, idUsuario=user_id)
+
+    if request.method == 'POST':
         # Obtener los datos del formulario
-        departamento = request.POST.get('departamento')
-        provincia = request.POST.get('provincia')
+        titulo = request.POST.get('titulo')
+        provincia = 'Yacuma'
         direccion = request.POST.get('urlMapa')
         material = request.POST.get('material')
         precio = request.POST.get('precio')
-        estado = request.POST.get('estado')
+        estados = request.POST.get('estado')
         descripcion = request.POST.get('descripcion')
 
-        # Crear el nuevo producto con los datos del formulario
+        print(f"Material recibido: {material}")
+        print(f"provincia: {provincia}")
+        print(f"estado: {estados}")
+        # Recuperar las instancias necesarias
+        subcategoria_obj = subCategoria.objects.get(nombre=material)
+        estado_obj = EstadoDelProducto.objects.get(estado=estados)
+        provincia_obj = Provincia.objects.get(nombre=provincia)
+
+        # Crear el nuevo producto
         producto = Producto(
-            nombre=user.nombre,  # Nombre del usuario que llena el formulario
-            departamento=departamento,
-            provincia=provincia,
-            direccion=direccion,
-            subcategoria=material,  # Asumiendo que 'material' es tu subcategoría
+            nombre=titulo,
+            provincia=provincia_obj,
+            subcategoria=subcategoria_obj,
             precio=precio,
             descripcion=descripcion,
-            estado=estado,
-            usuarioid=user  # Relacionar el producto con el usuario actual
+            estado=estado_obj,
+            usuario=user  # Relacionar el producto con el usuario actual
         )
 
-        # Guardar el producto en la base de datos
+        # Guardar el producto
         producto.save()
 
         # Guardar las imágenes subidas
@@ -139,6 +234,8 @@ def ofertarMView(request):
             imagen.save()
 
         messages.success(request, '¡Oferta creada exitosamente!')
-        return redirect('base')  # Redirige a la página principal después de guardar
+        return redirect('base')
 
-    return render(request, 'ofertar.html')
+    # Si la solicitud es GET, renderizar el formulario con el usuario
+    return render(request, 'ofertar.html', {'user': user,'is_profile_page': True,'carritos': carritos})
+

@@ -1,19 +1,21 @@
+{% load static %}
 <section class="contentP">
     <h1>Los Mejores Materiales para Tu Construcción</h1>
     <p>Calidad garantizada a precios competitivos. ¡Compra ahora y recibe tu pedido en la puerta de tu casa!</p>
-    
-    <div class="product-grid">
+    <p id="noResultMessage" style="display: none; color: red;">No se encontró ningún producto con ese nombre.</p>
+    <div class="product-grid" id="product-grid">
         {% for producto in productos %}
-        <div class="product-card">
+        <div class="product-card" data-subcategoria-id="{{ producto.subcategoria.id }}">
             <img src="{{ producto.imagenes.first.ruta.url }}" alt="{{ producto.nombre }}">
             <h3>{{ producto.nombre }}</h3>
-            <h2 id >{{ producto.subcategoria.nombre }}</h2>
+            <h2>{{ producto.subcategoria.nombre }}</h2>
             <p>{{ producto.descripcion }}</p>
             <span class="precio">{{ producto.precio }} Bs</span>
-            <button class="agregar-button">Agregar al Carrito</button>
+            <button class="agregar-button" data-id="{{ producto.id }}">Agregar al carrito</button>
         </div>
         {% empty %}
         <p>No hay productos disponibles en este momento.</p>
         {% endfor %}
     </div>
-</section>      
+    
+</section>
