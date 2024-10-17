@@ -94,12 +94,16 @@ function eliminarDelCarrito(productId) {
     });
 }
 // Función para actualizar el popup del carrito
+// Función para actualizar el popup del carrito
 function actualizarPopup(productos) {
     const cartPopup = document.getElementById('cart-popup');
     cartPopup.innerHTML = ''; // Limpiar contenido previo
 
+    // Agregar el título del carrito
+    cartPopup.innerHTML += `<h3>Carrito de Compras</h3>`;
+
     if (!Array.isArray(carrito) || carrito.length === 0) {
-        cartPopup.innerHTML = '<p>No hay productos en el carrito.</p>';
+        cartPopup.innerHTML += `<p>No hay productos en el carrito.</p>`;
     } else {
         let total = 0; // Inicializa total
 
@@ -109,16 +113,17 @@ function actualizarPopup(productos) {
             if (producto) {
                 total += producto.precio; // Acumula el precio
                 cartPopup.innerHTML += `
-                    <p>
-                        Producto: ${producto.nombre} - Precio: ${producto.precio}
+                    <div class="cart-item" id="cartItems" data-precio="${producto.precio}">
+                        <span>${producto.nombre} - ${producto.precio.toFixed(2)} Bs</span>
                         <button class="remove-from-cart" data-id="${producto.id}">Eliminar</button>
-                    </p>
+                    </div>
                 `;
             }
         });
 
-        cartPopup.innerHTML += `<p>Total: ${total}</p>`; // Muestra el total
-        
+        // Mostrar el total
+        cartPopup.innerHTML += `<p class="cart-total">Total: <strong id="cart-total">${total.toFixed(2)}</strong> Bs</p>`;
+
         // Vuelve a agregar los event listeners para los botones de eliminar
         const botonesEliminar = cartPopup.querySelectorAll('.remove-from-cart');
         botonesEliminar.forEach(boton => {
@@ -129,7 +134,6 @@ function actualizarPopup(productos) {
         });
     }
 }
-
 // Función para obtener el token CSRF
 function getCookie(name) {
     let cookieValue = null;

@@ -16,23 +16,23 @@
     <div class="nav-links" id="navLinks">
         <a href="{% url 'base' %}" class="nav-link">Inicio</a> <!-- Asegúrate de tener la URL configurada -->
          <!-- Botón del carrito -->
-        <div class="dropdown">
+         <div class="dropdown">
             <button class="dropbtn">Carrito</button>
-            <div class="dropdown-content" id="cart-popup">
+            <div class="cart-popup" id="cart-popup">
                 <h3>Carrito de Compras</h3>
                 {% if carritos %}
                     {% for item in carritos %}
-                        <p class="cart-item" data-precio="{{ item.producto.precio }}">
-                            {{ item.producto.nombre }} - {{ item.producto.precio|floatformat:2 }} Bs
-                            <button class="remove-from-cart" data-id="{{ item.producto.id }}">Eliminar</button>
-                        </p>
+                    <div class="cart-item" id="cartItems" data-precio="{{ item.producto.precio }}">
+                        <span>{{ item.producto.nombre }} - {{ item.producto.precio|floatformat:2 }} bs </span>
+                        <button class="remove-from-cart" data-id="{{ item.producto.id }}">Eliminar</button>
+                    </div>
                     {% endfor %}
-                    <p><strong>Total: <span id="cart-total">0</span> Bs</strong></p>
+                    <p class="cart-total">Total: <strong id="cart-total">0.00</strong> bs</p>
                 {% else %}
                     <p>No hay productos en el carrito.</p>
                 {% endif %}
             </div>
-        </div>
+        </div>        
 
                 <!--<a href=# class="nav-link">Iniciar Sesion</a>-->
                 {% if request.session.user_id %}

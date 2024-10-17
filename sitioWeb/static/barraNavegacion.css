@@ -1,22 +1,16 @@
-/* General de la navbar */
+
 .navbar {
     position: fixed;
-    top: 0;
+    top: 0%;
     width: 100%;
     background-color: var(--primary-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    /*padding: 1rem;*/
+    padding: 0.5%;
     color: var(--white);
     z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Logo */
-.logo {
-    display: flex;
-    align-items: center;
 }
 
 .logo-img {
@@ -24,12 +18,10 @@
     height: 60px;
     filter: drop-shadow(2px 2px 2px white);
 }
-
-.logo-img:hover {
-    filter: drop-shadow(2px 2px 5px var(--secondary-color));
+.logo-img:hover{
+    filter: drop-shadow var(--secondary-color);
 }
 
-/* Barra de búsqueda */
 .search-bar {
     display: flex;
     align-items: center;
@@ -38,120 +30,86 @@
 }
 
 .search-bar input {
-    padding: 0.5rem;
+    padding: 0.1rem;
+    margin: 0.5rem;
     border: none;
-    border-radius: 20px;
-    width: 100%;
-    max-width: 400px;
+    border-radius:44px;
+    width: 90%;
     height: 40px;
+    max-width: 400px;
 }
-
 .search-bar button {
+    display: flex;
+    padding: 1rem;
+    margin-top: 1px;
+    height: 40px;
     background-color: var(--primary-color);
-    color: var(--white);
+    box-shadow:2px 2px 5px 1px  var(--secondary-color);
     border: none;
-    padding: 0.5rem 1rem;
-    margin-left: 0.5rem;
-    border-radius: 20px;
+    color: var(--white);
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    border-radius:20px;
+    transition: all 0.5s;
 }
-
-.search-bar button:hover {
+button:hover{
     background-color: var(--secondary-color);
 }
-
-/* Enlaces de navegación */
+button:active {
+    background-color: var(--tertiary-color);
+    color: #fff;
+    transform: scale(0.95);
+}
 .nav-links {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    gap: 10px;  /* Ajusta el espacio entre los botones */
+    align-items: center;  /* Alinea verticalmente los elementos */
 }
-
 .nav-link {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    background-color: var(--primary-color);
-    border-radius: 5px;
-    color: var(--white);
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
+        display: flex;
+        padding: 0.5rem 0.5rem; 
+        margin: 0.5rem;
+        height: auto; /*podemos ponerlo en auto*/
+        background-color: var(--primary-color);
+        box-shadow: 2px 2px 5px 1px var(--secondary-color);
+        border: none;
+        color: var(--white);
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: all 0.5s;   
 }
-
 .nav-link:hover {
     background-color: var(--secondary-color);
 }
+.nav-link:active {
+    background-color: var(--tertiary-color);
+    color: #fff;
+    transform: scale(0.95); /* Efecto de pulso al hacer clic */
+}
+ion-icon{
+    padding-top: 5px;
+}
 
-/* Perfil */
 .profile-img {
     width: 35px;
     height: 35px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 0.5rem;
+    border-radius: 50%;  /* Hace la imagen redonda */
+    object-fit: cover;   /* Asegura que la imagen se ajuste correctamente */
+    margin-right: 8px;   /* Espacio entre la imagen y el nombre/enlace */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra alrededor */
 }
 
-/* Dropdown del carrito */
-.dropdown {
-    position: relative;
-}
-
-.dropbtn {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-}
-
-.dropbtn:hover {
-    background-color: var(--secondary-color);
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #03a678;
-    min-width: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    z-index: 1000;
-    border-radius: 5px;
-}
-
-/* Mostrar el dropdown al pasar el mouse */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content p {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 5px 0;
-}
-
-.remove-from-cart {
+.cart-count {
     background-color: #ff4500;
-    color: white;
-    border: none;
-    padding: 0.2rem 0.5rem;
-    border-radius: 3px;
-    cursor: pointer;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.8em;
 }
 
-.remove-from-cart:hover {
-    background-color: #e63900;
-}
-
-/* Botón hamburguesa para móviles */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -166,31 +124,55 @@
     transition: 0.4s;
 }
 
-/* Diseño responsivo */
-@media (max-width: 768px) {
-    .search-bar {
-        flex-grow: 1;
-        margin: 0.5rem 0;
-    }
 
+@media (max-width: 768px) {/*768 antes*/
+    .navbar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 0.5px;
+        height: 77px;
+    }
+    .search-bar {
+        order: 1;
+        width: 50%;
+        margin: 1rem 0;
+        padding: 0.5px;
+    }
+    .search-bar button{
+       font-size: 9px;
+       border-radius: 15px;
+       width: 36px;
+       height: 33px;
+
+    }
     .nav-links {
         display: none;
+        width: 100%;
         flex-direction: column;
         align-items: center;
-        width: 100%;
-        background-color: var(--primary-color);
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: 999;
-        transition: all 0.3s;
+        order: 2;
+        position: absolute; 
+        top: 100%; 
+        right: 0; 
+        background-color:var(--primary-color); 
+        z-index: 1000; 
     }
 
     .nav-links.active {
         display: flex;
+        width: 30%;
     }
-
+    .nav-link{
+        width: 100%;
+        border: 0.5px;
+        margin: 1px;
+    }
     .hamburger {
         display: flex;
+        order: 1;
+        padding: 5px;
     }
+
 }
