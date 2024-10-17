@@ -5,17 +5,23 @@
     top: 60px;
     right: 20px;
     width: 300px;
-    background-color: #03a678;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #02735E;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     padding: 1rem;
     border-radius: 8px;
     z-index: 1000;
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Cambia el color de fondo cuando el mouse pase por encima */
+.cart-popup:hover {
+    background-color: #03A678; /* Cambia el color al pasar el mouse */
 }
 
 /* Estilo para los elementos del carrito */
 .cart-popup h3 {
     margin-top: 0;
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 .cart-items {
@@ -32,7 +38,7 @@
 }
 
 .remove-btn {
-    background-color: red;
+    background-color: #ff0000e0;
     color: white;
     border: none;
     padding: 5px 10px;
