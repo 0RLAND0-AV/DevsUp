@@ -150,3 +150,250 @@
         margin-bottom: 20px;
     }
 }
+
+
+
+
+.Boton_Editar_Productos{
+    position: absolute;
+    top: 10px;
+    right:20px;
+    margin-right: 20px;
+    background-color: transparent;
+    width: 10%;
+    font-size: 10px;
+    
+}
+
+.BotonEditar {
+    display: flex; /* Mantén solo display: flex */
+    display: inline-block;
+    padding: 10px;
+    margin-top: 1px;
+    margin-right: 15px;
+    height: 40px;
+    width: 90px;
+    background-color: var(--tertiary-color);
+    box-shadow: 2px 2px 5px 1px var(--secondary-color);
+    border: none;
+    color: var(--white);
+    justify-content: center; /* Alinea horizontalmente el contenido al centro */
+    align-items: center; /* Alinea verticalmente el contenido al centro */
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.5s;
+    gap: 8px; /* Añade espacio entre el texto y el ícono */
+}
+.BotonEditar:hover{
+    background-color: var(--secondary-color);
+    color: #fff;
+    transform: scale(0.95);
+}
+.BotonEditar:active{
+background-color: var(--primary-color);
+}
+
+.Boton_Eliminar_Productos{
+    position: absolute;
+    bottom:5px;
+    right: 5px;
+    background-color: transparent;
+    width: 15%;
+    font-size: 10px;
+    
+}
+.BotonEliminarr{
+        display: flex; /* Asegúrate de que este botón también tenga display: flex */
+        display: inline-block;
+        padding: 10px;
+        height: 40px;
+        width: 90px;
+        margin-bottom: 5px;
+        margin-right: 0px;
+        background-color: rgb(223, 83, 83);
+        box-shadow: 2px 2px 5px 1px var(--secondary-color);
+        border: none;
+        color: var(--white);
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 20px;
+        transition: all 0.5s;
+        gap: 8px; /* Añade espacio entre el texto y el ícono */
+} 
+.BotonEliminarr:hover{
+    background-color: rgb(194, 27, 27);
+    color: #fff;
+    transform: scale(0.95);
+}
+.BotonEliminarr:active{
+    background-color: var(--tertiary-color);
+}
+.container3 {
+    position: relative;
+    max-width: 800px; /* Establecer un ancho máximo */
+    width: 95%;
+    margin: auto;
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: var(--secondary-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group.inline {
+    display: flex; /* Usar flexbox para alinear elementos en línea */
+    gap: 20px; /* Espacio entre los elementos */
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+
+input[type="file"] {
+    display: none;
+}
+
+/* Estilo para el botón personalizado */
+.custom-file-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.custom-file-button:hover {
+    background-color: var(--secondary-color);
+}
+.custom-file-button:active{
+    background-color: var(--tertiary-color);
+}
+
+/* Estilo para mostrar el nombre del archivo seleccionado */
+#file-name {
+    margin-left: 10px;
+    font-style: italic;
+    font-size: 14px;
+    color: #555;
+}
+
+.preview-container {
+    display: flex;
+    flex-wrap: nowrap; /* Cambiar a nowrap para evitar que se deformen */
+    margin-top: 10px;
+    max-width: 100%; /* Limitar el ancho del contenedor de vista previa */
+    overflow-x: auto; /* Permitir desplazamiento horizontal si hay muchos archivos */
+}
+.preview-container img {
+    max-width: 100px; /* Limitar el ancho máximo de las imágenes */
+    height: auto; /* Mantener la proporción de la imagen */
+    object-fit: cover; /* Mantener la proporción de la imagen */
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+
+
+.file-input {
+    margin-top: 5px;
+}
+
+
+.checkbox-container {
+    display: flex; /* Usa flexbox para alinear elementos en línea */
+    align-items: flex-end; /* Alinea verticalmente los elementos al centro */
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 15px;
+    width: 23px; /* Ajusta el ancho */
+    height: 20px; /* Ajusta la altura */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el checkbox */
+}
+
+.button-group {
+    display: flex;
+    display: inline-block;
+    justify-content: space-between;
+    height:10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #02735E; /* Color cuando está deshabilitado */
+}
+
+.btn-primary:disabled {
+    background-color: #666666; /* Mantenemos el mismo color */
+    opacity: 0.5; /* Opacidad al 50% para indicar que está deshabilitado */
+    pointer-events: none; /* Desactivar cualquier interacción con el botón */
+}
+
+.btn-secondary {
+    background-color: #c02323;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+    
+    .form-group.inline {
+        display: block; /* Usar flexbox para alinear elementos en línea */
+        gap: 20px; /* Espacio entre los elementos */
+    }
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
