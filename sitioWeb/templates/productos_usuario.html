@@ -45,44 +45,52 @@ Perfil
         </div>
     </div>
     
-    
-    <div class="product-grid" id="product-grid">
+<div class="ContenedorProductos">
+    <div class="product-gridd" id="product-gridd">
         {% for producto in misProductos %}
-        <div class="tarjeta-producto" data-subcategoria-id="{{ producto.subcategoria.id }}">
+        <div class="tarjeta-productoo" data-subcategoria-id="{{ producto.subcategoria.id }}">
             
             <!-- Checkbox de selección -->
-            <div class="seleccion-producto">
-                <input type="checkbox" class="checkbox-producto" data-id="{{ producto.id }}">
+            <!--<div class="seleccion-productoo">
+                <input type="checkbox" class="checkbox-productoo" data-id="{{ producto.id }}">
+            </div>-->
+            <div class="seleccion-productoo">
+                <label class="checkbox-burbuja">
+                    <input type="checkbox" class="checkbox-productoo" data-id="{{ producto.id }}">
+                    <span></span>
+                </label>
             </div>
+            
     
             <!-- Enlace en la imagen para detalles del producto -->
             <a href="{% url 'detalle_producto' producto.id %}">
                 <img src="{{ producto.imagenes.first.ruta.url }}" 
                      alt="{{ producto.nombre }}" 
-                     class="imagen-producto">
+                     class="imagen-productoo">
             </a>
     
             <!-- Enlace en el nombre para los detalles del producto -->
-            <a href="{% url 'detalle_producto' producto.id %}">
-                <h3 class="nombre-producto">{{ producto.nombre }}</h3>
+            <a class="nombre-productoo" href="{% url 'detalle_producto' producto.id %}">
+                <h3>{{ producto.nombre }}</h3>
             </a>
     
-            <h4 class="subcategoria-producto">{{ producto.subcategoria.nombre }}</h4>
-            <p class="descripcion-producto">{{ producto.descripcion }}</p>
-            <span class="precio-producto">{{ producto.precio }} Bs</span>
+            <h4 class="subcategoria-productoo">{{ producto.subcategoria.nombre }}</h4>
+            <div class="ContenedorDescripcion">
+                <p class="descripcion-productoo">{{ producto.descripcion }}</p>
+            </div>
+            <span class="precio-productoo">{{ producto.precio }} Bs</span>
     
             <!-- Estado del producto -->
-            <span class="estado-producto">
-                Estado: 
+            <button class="boton-estado {% if producto.estado_producto %}activo{% else %}inactivo{% endif %}">
                 {% if producto.estado_producto %}
                     Activo
                 {% else %}
                     Inactivo
                 {% endif %}
-            </span>
-    
+            </button>
+            
             <!-- Fecha de creación -->
-            <p class="fecha-publicacion">
+            <p class="fecha-publicacionn">
                 Publicado el: {{ producto.fecha_creacion|date:"d/m/Y H:i" }}
             </p>
     
@@ -97,7 +105,7 @@ Perfil
         </div>
         {% endfor %}
     </div>  
-       
+</div>      
     {% include 'barraPerfil.html' %}
 {% endblock %}
 

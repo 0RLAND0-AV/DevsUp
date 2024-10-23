@@ -1,71 +1,239 @@
+
+.subBarraNanvegacion{
+    position: fixed;
+    top: 12%;
+    left: 15%;
+    background: var(--primary-color);
+    z-index: 1;
+    font-size: 12px;
+    display: flex; /* Permite que los elementos hijos se alineen en una fila */
+    align-items: center; /* Alinea verticalmente al centro */
+    gap: 20px; /* Espacio entre los elementos */
+    padding: 2px; /* Espacio interno */
+    background-color: var(--secondary-color); /* Fondo claro */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 85%;
+    color: var(--white);
+}
+
+/* Contenedor principal del filtro */
+
+
+/* Estilo del menú desplegable */
+.subBarraNanvegacion select {
+    padding: 10px; /* Espacio interno del select */
+    border: 1px solid #ddd; /* Borde suave */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: border-color 0.3s; /* Transición suave en el borde */
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.filtro-fechas-container select:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Estilo para las etiquetas */
+.filtro-fechas-container label {
+    font-weight: bold; /* Texto en negrita */
+    color: var(--white); /* Color del texto */
+    box-shadow:2px 2px 5px 1px  var(--secondary-color);
+}
+.filtro-fechas-container option{
+    background-color: var(--primary-color);
+}
+.filtro-fechas-container option:hover{
+    background-color: var(--tertiary-color);
+}
+
+/* Contenedor de editar */
+.editar-container, .eliminar-container {
+    display: flex; /* Permite que los elementos dentro se alineen en línea */
+    align-items: center; /* Alinea verticalmente al centro */
+}
+
+/* Estilo de los botones */
+#editarSeleccionados {
+    padding: 10px 15px; /* Espacio interno del botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: var(--tertiary-color); /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave en el fondo */
+}
+#editarSeleccionados:hover{
+    box-shadow: 5px 5px 5px 5px var(--secondary-color);
+}
+#eliminarSeleccionados{
+    padding: 10px 15px; /* Espacio interno del botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: red; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave en el fondo */
+}
+
+ #eliminarSeleccionados:hover {
+    box-shadow: 5px 5px 5px 5px var(--secondary-color);
+}
+
+/* Checkbox de seleccionar todo */
+.eliminar-container input[type="checkbox"] {
+    margin-right: 10px; /* Espacio entre el checkbox y el botón */
+    transform: scale(1.2); /* Aumenta el tamaño del checkbox */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el checkbox */
+}
+
+/* Estilo de los contenedores de filtros por fechas */
+.filtro-fechas-container {
+    display: flex; /* Permite que los elementos dentro se alineen en línea */
+    align-items: center; /* Alinea verticalmente al centro */
+}
+
+/* Ajustes para los selectores de filtro por fechas */
+.filtro-fechas-container select {
+    margin-left: 10px; /* Espacio a la izquierda del select */
+}
+
+/* Responsive: Asegura que el filtro se vea bien en pantallas pequeñas */
+@media (max-width: 768px) {
+    .filtro {
+        flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+        align-items: flex-start; /* Alinea a la izquierda */
+    }
+
+    .filtro > * {
+        width: 100%; /* Asegura que los elementos ocupen el ancho completo */
+    }
+}
+
+
+/* ---------------------------------------------------*/
 /* Contenedor principal de productos */
-.productos-contenedor {
+.ContenedorProductos{
+    position: absolute;
+    top: 10%;
+    left: 15%;
+    width: 85%;
+    margin-bottom: 10%;
+}
+.product-gridd {
+    width: 100%;
+    height: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 20px;
-    padding: 20px;
+    padding: 10px;
     background-color: #f3f4f6;
     border-radius: 8px;
 }
 
 /* Tarjeta de producto individual */
-.tarjeta-producto {
+.tarjeta-productoo {
     position: relative;
     border: 1px solid #ddd;
     border-radius: 8px;
+    padding: 5px;
     overflow: hidden;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color:transparent;
+    box-shadow: 2px 2px 5px 1px var(--secondary-color);
     transition: transform 0.2s ease-in-out;
+    height: 475px;
 }
 
-.tarjeta-producto:hover {
-    transform: scale(1.05);
+.tarjeta-productoo:hover {
+    transform: scale(1.01);
 }
 
 /* Contenedor del checkbox (para selección de productos) */
-.seleccion-producto {
+.seleccion-productoo {
     position: absolute;
-    top: 10px;
+    top: 1px;
     left: 10px;
     z-index: 1;
 }
 
-/* Checkbox del producto */
-.checkbox-producto {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
+/* Estilo Redondo y Animado */
+.checkbox-burbuja input {
+    display: none; /* Ocultar el checkbox nativo */
 }
 
+.checkbox-burbuja span {
+    width: 25px;
+    height: 25px;
+    background: #eee; /* Color inicial */
+    display: inline-block;
+    border-radius: 50%; /* Forma circular */
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px 2px var(--secondary-color); /* Sombra */
+}
+
+.checkbox-burbuja input:checked + span {
+    background-color: red; /* Color al estar seleccionado */
+}
+
+.checkbox-burbuja span:after {
+    content: "";
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0); /* Ocultar círculo interno */
+    transition: transform 0.3s ease; /* Animación suave */
+}
+
+.checkbox-burbuja input:checked + span:after {
+    display: block;
+    transform: translate(-50%, -50%) scale(1); /* Mostrar círculo interno al estar marcado */
+}
+
+
 /* Imagen del producto */
-.imagen-producto {
+.imagen-productoo {
     width: 100%;
     height: 180px;
     object-fit: cover;
     border-bottom: 1px solid #eee;
+    border-radius: 10px;
 }
 
 /* Nombre del producto */
-.nombre-producto {
+.nombre-productoo {
     font-size: 1.2rem;
     font-weight: bold;
-    margin: 10px 0;
+    margin: 3px 0;
     text-align: center;
-    color: #333;
+    color:var(--secondary-color);
+    text-decoration: none;
 }
 
 /* Subcategoría del producto */
-.subcategoria-producto {
+.subcategoria-productoo {
     font-size: 1rem;
     color: #777;
     text-align: center;
     margin-bottom: 5px;
 }
-
+.ContenedorDescripcion{
+    margin: 0px;
+    width: 99%;
+    height: 85px;
+    box-shadow: 0.5px 0.5px 20px 1px rgb(230, 221, 221);
+    border-radius: 5px;
+}
 /* Descripción del producto */
-.descripcion-producto {
-    padding: 10px;
+.descripcion-productoo {
+    display: inline-block;
+    padding: 5px;
     font-size: 0.9rem;
     color: #555;
     text-align: justify;
@@ -73,32 +241,48 @@
 }
 
 /* Precio del producto */
-.precio-producto {
+.precio-productoo {
     font-size: 1.1rem;
-    color: #27ae60;
+    color: var(--primary-color);
     font-weight: bold;
     display: block;
     margin: 10px 0;
+    padding:0;
     text-align: center;
 }
 
 /* Estado del producto (indicador de activo o inactivo) */
-.estado-producto {
-    display: block;
-    font-size: 0.9rem;
+.boton-estado {
+    margin-left: 25%;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    border-bottom: 1px;
+    color: white;
     font-weight: bold;
-    margin: 10px 0;
     text-align: center;
-    color: #2ecc71; /* Verde para productos activos */
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 50%;
 }
 
-/* Cambia a rojo si el producto está inactivo */
-.estado-producto.inactivo {
-    color: #e74c3c;
+/* Estilo para el estado activo (verde) */
+.boton-estado.activo {
+    background-color: #28a745; /* Verde */
 }
+
+/* Estilo para el estado inactivo (rojo) */
+.boton-estado.inactivo {
+    background-color: #dc3545; /* Rojo */
+}
+
+
 
 /* Fecha de publicación */
-.fecha-publicacion {
+.fecha-publicacionn {
     text-align: center;
     font-size: 0.85rem;
     color: #7f8c8d;
@@ -106,7 +290,7 @@
 }
 
 /* Botón de estado (opcional) */
-.estado-producto-boton {
+.estado-productoo-boton {
     width: 100%;
     background-color: #3498db;
     color: #fff;
@@ -117,10 +301,6 @@
     font-size: 0.9rem;
 }
 
-.estado-producto-boton:hover {
-    background-color: #2980b9;
-}
-
 /* Mensaje cuando no hay productos */
 .sin-productos {
     text-align: center;
@@ -129,16 +309,37 @@
     color: #555;
 }
 
-/* Efecto de hover en el botón de checkbox */
-.checkbox-producto:hover {
-    outline: 2px solid #3498db;
-    outline-offset: 2px;
-}
 
 /* Mejora en la animación de hover de tarjetas */
-.tarjeta-producto:hover .imagen-producto {
+.tarjeta-productoo:hover .imagen-productoo {
     filter: brightness(0.9);
 }
+
+.boton-editar {
+    position: absolute;
+    bottom:0px;
+    display: inline-block; /* Para que se comporte como un botón */
+    padding: 5px;
+    margin-bottom: 0px;
+    width: 100%;
+    background-color: var(--tertiary-color); /* Color verde */
+    color: white; /* Color de texto blanco */
+    text-align: center;
+    border-radius: 5px; /* Bordes redondeados */
+    text-decoration: none; /* Quitar el subrayado del enlace */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Efecto suave */
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.boton-editar:hover {
+    background-color: var(--secondary-color); /* Color al hacer hover (un poco más oscuro) */
+}
+
+.boton-editar:active {
+    background-color: var(--primary-color); /* Color al hacer clic */
+}
+
 
 /* Responsividad */
 @media (max-width: 600px) {
@@ -146,12 +347,10 @@
         grid-template-columns: 1fr;
     }
     
-    .tarjeta-producto {
+    .tarjeta-productoo {
         margin-bottom: 20px;
     }
 }
-
-
 
 
 .Boton_Editar_Productos{
