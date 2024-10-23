@@ -239,3 +239,9 @@ def ofertarMView(request):
     # Si la solicitud es GET, renderizar el formulario con el usuario
     return render(request, 'ofertar.html', {'user': user,'is_profile_page': True,'carritos': carritos})
 
+
+def mis_materiales(request):
+    user_id = request.session.get('user_id')
+    user = get_object_or_404(Usuario, idUsuario=user_id)
+    carritos = CarritoProducto.objects.filter(usuario=user_id)
+    return render(request, 'productos_usuario.html', {'user': user,'is_profile_page': True,'carritos': carritos})

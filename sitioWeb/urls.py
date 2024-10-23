@@ -11,7 +11,8 @@ from .views import(
     ofertarMView ,
     agregar_al_carrito,
     cargar_provincias_por_departamento,
-    eliminar_del_carrito
+    eliminar_del_carrito,
+    mis_materiales
 ) # Asegúrate de importar tu vista
 from django.contrib.auth import views as auth_views
 
@@ -25,6 +26,7 @@ urlpatterns = [
     path('get_provincias/', cargar_provincias_por_departamento, name='get_provincias'),
     path('agregar/<int:producto_id>/', agregar_al_carrito, name='agregar_al_carrito'),
     path('eliminar/<int:producto_id>/', eliminar_del_carrito, name='eliminar_del_carrito'),
+    path('perfil/mis-materiales/', mis_materiales, name='mis_materiales'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

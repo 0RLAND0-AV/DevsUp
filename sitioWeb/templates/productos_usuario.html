@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Perfil
+{% endblock %}
+
+{% block contenidos %}
+    <section class="contentP">
+        <h1>AQUI COLOCAS TU HTML GUILDER SI QUIERES LO CAMBIAS EL SECTIONS CLASS CONTENTP TE LO RECOMIENDO</h1>
+        <p>LA CLAVE ES QUE NO LE QUITES EL INCLUDE BARRAPERFIL.HTML , INCLUSO SI QUIERES PUEDES HACER TU PROPIA PLANTILLA Y AQUI SOLO COLOCARIAS INCLUDE 'TUPLANTILLA.HTML'</p>
+        
+    </section>
+    {% include 'barraPerfil.html' %}
+{% endblock %}
+
+<!--{% block materiales %}
+    {% include 'materiales.html' %}
+{% endblock %}-->
+{% block extra_js %}
+    <script src="{% static 'perfil.js' %}"></script>
+{% endblock %}
