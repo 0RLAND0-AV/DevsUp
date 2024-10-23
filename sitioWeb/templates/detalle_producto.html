@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Detalle del producto
+{% endblock %}
+
+{% block contenidos %}
+    <!--aqui colocas tu codigo de ver detalles del producto , un boton que habilite editar y nose que mas-->
+    {% include 'barraPerfil.html' %}
+{% endblock %}
+
+<!--{% block materiales %}
+    {% include 'materiales.html' %}
+{% endblock %}-->
+{% block extra_js %}
+    <script src="{% static 'perfil.js' %}"></script>
+{% endblock %}

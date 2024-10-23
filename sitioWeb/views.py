@@ -244,4 +244,55 @@ def mis_materiales(request):
     user_id = request.session.get('user_id')
     user = get_object_or_404(Usuario, idUsuario=user_id)
     carritos = CarritoProducto.objects.filter(usuario=user_id)
-    return render(request, 'productos_usuario.html', {'user': user,'is_profile_page': True,'carritos': carritos})
+
+    # Recupera todos los productos del usuario autenticado
+    productos = Producto.objects.filter(usuario=user_id)
+
+    # Filtra los productos si se selecciona una opción en el filtro
+    filtro = request.GET.get('filtro')
+    if filtro == 'activos':
+        productos = productos.filter(estado_producto=True)
+    elif filtro == 'inactivos':
+        productos = productos.filter(estado_producto=False)
+
+
+    return render(request, 'productos_usuario.html', {'user': user,'is_profile_page': True,'carritos': carritos,'misProductos': productos})
+
+def detalle_producto(request, producto_id):
+    user_id = request.session.get('user_id')
+    user = get_object_or_404(Usuario, idUsuario=user_id)
+    carritos = CarritoProducto.objects.filter(usuario=user_id)
+
+    producto = get_object_or_404(Producto, id=producto_id)
+    categorias = Categoria.objects.all()  # Trae todas las categorías
+
+    if request.method == 'POST':
+        # Procesar los datos enviados
+        producto.nombre = request.POST.get('nombre')
+        producto.descripcion = request.POST.get('descripcion')
+        producto.precio = request.POST.get('precio')
+        producto.estado = 'estado' in request.POST
+        producto.categoria_id = request.POST.get('categoria')
+
+        # Verificar que el nombre no sea nulo
+        if not producto.nombre:
+            messages.error(request, "El nombre del producto no puede estar vacío.")
+            return render(request, 'detalle_producto.html', {'producto': producto, 'categorias': categorias})
+
+        # Guardar el producto actualizado
+        producto.save()
+
+        # Procesar las nuevas imágenes (si se suben)
+        if request.FILES.getlist('nuevas_imagenes'):
+            for imagen in request.FILES.getlist('nuevas_imagenes'):
+                Imagenes.objects.create(producto=producto, ruta=imagen)
+
+        # Eliminar imágenes que no se quieran conservar
+        if request.POST.getlist('imagenes_a_eliminar'):
+            for imagen_id in request.POST.getlist('imagenes_a_eliminar'):
+                imagen = get_object_or_404(Imagenes, id=imagen_id)
+                imagen.delete()
+
+        return redirect('detalle_producto', producto_id=producto.id)
+
+    return render(request, 'detalle_producto.html', {'user': user,'is_profile_page': True,'carritos': carritos,'producto': producto, 'categorias': categorias})
