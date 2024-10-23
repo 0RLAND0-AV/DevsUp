@@ -182,8 +182,6 @@ def cargar_provincias_por_departamento(request):
         return JsonResponse({'provincias': list(provincias)}, status=200)
     return JsonResponse({'error': 'No se encontraron provincias'}, status=404)
 
-#Esta funcion deberia manejar el formulario que esta en el archivo ofertar.html, En si ESTO IGUAL ES OTRO FORMULARIO, PERO ESTE DEBERIA GUARDAR LOS DATOS EN MI 
-from django.shortcuts import get_object_or_404
 
 def ofertarMView(request):
     # Obtener el usuario desde la sesión
@@ -264,30 +262,36 @@ def detalle_producto(request, producto_id):
     carritos = CarritoProducto.objects.filter(usuario=user_id)
 
     producto = get_object_or_404(Producto, id=producto_id)
-    categorias = Categoria.objects.all()  # Trae todas las categorías
+    categorias = Categoria.objects.all()  # Traer todas las categorías
+    subcategorias = subCategoria.objects.filter(categoria=producto.subcategoria.categoria)  # Subcategorías de la categoría del producto
+    departamentos = Departamento.objects.all()  # Todos los departamentos
+    provincias = Provincia.objects.filter(departamento=producto.provincia.departamento)  # Provincias del departamento del producto
+    estados = EstadoDelProducto.objects.all()  # Todos los estados de los productos
 
     if request.method == 'POST':
-        # Procesar los datos enviados
+        # Actualizar los datos del producto
         producto.nombre = request.POST.get('nombre')
         producto.descripcion = request.POST.get('descripcion')
         producto.precio = request.POST.get('precio')
-        producto.estado = 'estado' in request.POST
-        producto.categoria_id = request.POST.get('categoria')
+        producto.subcategoria_id = request.POST.get('subcategoria')
+        producto.provincia_id = request.POST.get('provincia')
+        producto.estado_id = request.POST.get('estado')
+        producto.estado_producto = 'estado_producto' in request.POST
 
         # Verificar que el nombre no sea nulo
         if not producto.nombre:
             messages.error(request, "El nombre del producto no puede estar vacío.")
-            return render(request, 'detalle_producto.html', {'producto': producto, 'categorias': categorias})
+            return render(request, 'detalle_producto.html', {'producto': producto, 'categorias': categorias, 'subcategorias': subcategorias, 'departamentos': departamentos, 'provincias': provincias, 'estados': estados})
 
         # Guardar el producto actualizado
         producto.save()
 
-        # Procesar las nuevas imágenes (si se suben)
+        # Procesar las nuevas imágenes
         if request.FILES.getlist('nuevas_imagenes'):
             for imagen in request.FILES.getlist('nuevas_imagenes'):
                 Imagenes.objects.create(producto=producto, ruta=imagen)
 
-        # Eliminar imágenes que no se quieran conservar
+        # Eliminar imágenes seleccionadas
         if request.POST.getlist('imagenes_a_eliminar'):
             for imagen_id in request.POST.getlist('imagenes_a_eliminar'):
                 imagen = get_object_or_404(Imagenes, id=imagen_id)
@@ -295,4 +299,50 @@ def detalle_producto(request, producto_id):
 
         return redirect('detalle_producto', producto_id=producto.id)
 
-    return render(request, 'detalle_producto.html', {'user': user,'is_profile_page': True,'carritos': carritos,'producto': producto, 'categorias': categorias})
+    return render(request, 'detalle_producto.html', {
+        'user': user,
+        'is_profile_page': True,
+        'carritos': carritos,
+        'producto': producto,
+        'categorias': categorias,
+        'subcategorias': subcategorias,
+        'departamentos': departamentos,
+        'provincias': provincias,
+        'estados': estados,
+        'imagenes': producto.imagenes.all(),
+    })
+
+def obtener_subcategorias(request, categoria_id):
+    subcategorias = subCategoria.objects.filter(categoria_id=categoria_id).values('id', 'nombre')
+    return JsonResponse({'subcategorias': list(subcategorias)})
+
+def obtener_provincias(request, departamento_id):
+    provincias = Provincia.objects.filter(departamento_id=departamento_id).values('id', 'nombre')
+    return JsonResponse({'provincias': list(provincias)})
+
+def eliminar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+
+    if request.method == 'POST':
+        try:
+            producto.delete()
+            messages.success(request, 'El producto ha sido eliminado exitosamente.')
+            return redirect('mis_materiales')  # Redirigir a la vista de productos o la página principal
+        except Exception as e:
+            messages.error(request, 'Hubo un problema al eliminar el producto: {}'.format(str(e)))
+            return redirect('detalle_producto', producto_id=producto_id)
+
+    # Para propósitos de prueba, permite eliminar también con GET (NO RECOMENDADO en producción)
+    elif request.method == 'GET':
+        try:
+            producto.delete()
+            messages.success(request, 'El producto ha sido eliminado exitosamente.')
+            return redirect('mis_materiales')
+        except Exception as e:
+            messages.error(request, 'Hubo un problema al eliminar el producto: {}'.format(str(e)))
+            return redirect('detalle_producto', producto_id=producto_id)
+
+    messages.error(request, 'Método no permitido.')
+    return redirect('detalle_producto', producto_id=producto_id)
+
+
