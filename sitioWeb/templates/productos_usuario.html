@@ -71,7 +71,7 @@ Perfil
                 Publicado el: {{ producto.fecha_creacion|date:"d/m/Y H:i" }}
             </p>
 
-            <a href="{% url 'detalle_producto' producto.id %}" class="boton-editar">Editar Producto</a>
+            <a href="{% url 'detalle_producto' producto.id %}" id="editar-producto2" class="boton-editar">Editar Producto</a>
         </div>
         {% empty %}
         <div class="sin-productos">

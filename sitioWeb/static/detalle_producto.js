@@ -17,6 +17,7 @@ document.getElementById('editar-producto').addEventListener('click', function() 
     this.style.display = 'none';
 });
 
+
 // Actualización dinámica de subcategorías según la categoría seleccionada
 document.getElementById('categoria-producto').addEventListener('change', function () {
     const categoriaId = this.value;
