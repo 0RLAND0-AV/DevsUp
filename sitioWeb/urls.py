@@ -16,7 +16,8 @@ from .views import(
     detalle_producto,
     obtener_provincias,
     obtener_subcategorias,
-    eliminar_producto
+    eliminar_producto,
+    eliminar_productos
 ) # Asegúrate de importar tu vista
 from django.contrib.auth import views as auth_views
 
@@ -35,7 +36,9 @@ urlpatterns = [
     path('subcategorias/<int:categoria_id>/', obtener_subcategorias, name='obtener_subcategorias'),
     path('provincias/<int:departamento_id>/', obtener_provincias, name='obtener_provincias'),
     path('producto/eliminar/<int:producto_id>/',eliminar_producto, name='eliminar_producto'),
-
+    #path('eliminar_productos/', eliminar_productos, name='eliminar_productos'),
+    path('perfil/mis-materiales/eliminar/', eliminar_productos, name='eliminar_productos'),
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

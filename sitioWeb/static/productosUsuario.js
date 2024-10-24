@@ -60,51 +60,6 @@ document.getElementById('filtro-fechas').addEventListener('change', function() {
     }
 });
 
-// Editar producto seleccionado
-document.getElementById('editarSeleccionados').addEventListener('click', function() {
-    const selectedProducts = document.querySelectorAll('.producto-checkbox:checked');
-    
-    // Si no se ha seleccionado ningún producto
-    if (selectedProducts.length === 0) {
-        alert("Por favor selecciona un producto para editar.");
-        return;
-    }
-
-    // Si se selecciona más de un producto
-    if (selectedProducts.length > 1) {
-        alert("Solo puedes seleccionar un producto para editar.");
-        return;
-    }
-
-    // Si hay un solo producto seleccionado, proceder con la edición
-    const product = selectedProducts[0];
-    const productId = product.getAttribute('data-id');
-    console.log("Editando producto con ID:", productId); // Aquí puedes realizar la lógica de edición
-
-    // Redirigir a la página de edición del producto seleccionado
-    window.location.href = `/editar/${productId}/`;
-});
-
-
-// Eliminar productos seleccionados con confirmación
-document.getElementById('eliminarSeleccionados').addEventListener('click', function() {
-    const selectedProducts = document.querySelectorAll('.producto-checkbox:checked');
-    if (selectedProducts.length === 0) {
-        alert("Por favor selecciona al menos un producto para eliminar.");
-        return;
-    }
-
-    // Mostrar confirmación antes de eliminar
-    const confirmacion = confirm("¿Estás seguro de que quieres eliminar los productos seleccionados?");
-    if (confirmacion) {
-        selectedProducts.forEach(product => {
-            const productId = product.getAttribute('data-id');
-            console.log("Eliminando producto con ID:", productId); // Aquí puedes realizar la lógica de eliminación
-            // Ejemplo: redirigir a la lógica de eliminación en tu backend
-            window.location.href = `/eliminar/${productId}/`;
-        });
-    }
-});
 
 // Seleccionar/Deseleccionar todos los productos
 document.getElementById('seleccionar-todo').addEventListener('click', function() {
@@ -113,4 +68,23 @@ document.getElementById('seleccionar-todo').addEventListener('click', function()
     allCheckboxes.forEach(checkbox => {
         checkbox.checked = isChecked;
     });
+});
+
+
+document.getElementById('eliminarSeleccionados').addEventListener('click', function () {
+    const checkboxes = document.querySelectorAll('.checkbox-productoo:checked');
+    const ids = Array.from(checkboxes).map(checkbox => checkbox.getAttribute('data-id'));
+
+    if (ids.length === 0) {
+        alert('Por favor, selecciona al menos un producto para eliminar.');
+        return;
+    }
+
+    if (confirm('¿Estás seguro de que deseas eliminar los productos seleccionados?')) {
+        // Agregar los IDs seleccionados al input oculto del formulario
+        document.getElementById('product-ids-input').value = JSON.stringify(ids);
+
+        // Enviar el formulario
+        document.getElementById('form-eliminar-productos').submit();
+    }
 });

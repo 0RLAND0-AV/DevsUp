@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import path
 from django.contrib import admin
 from .models import Usuario , Producto ,Categoria,CarritoProducto , Departamento,Provincia,subCategoria,EstadoDelProducto,Imagenes
-from django.http import HttpResponse ,JsonResponse
+from django.http import HttpResponse ,JsonResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login ,logout , authenticate
 from django.contrib import messages
 from django.core.exceptions import ValidationError
@@ -11,6 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+
+
 
 # Create your views here.
 def baseView(request):
@@ -344,5 +346,17 @@ def eliminar_producto(request, producto_id):
 
     messages.error(request, 'Método no permitido.')
     return redirect('detalle_producto', producto_id=producto_id)
+@csrf_exempt  # Solo si tienes problemas con CSRF, de lo contrario no lo uses
+def eliminar_productos(request):
+    if request.method == 'POST':
+        product_ids = json.loads(request.POST.get('product_ids', '[]'))
+
+        # Eliminar los productos seleccionados
+        Producto.objects.filter(id__in=product_ids).delete()
+
+        # Redirigir de nuevo a la página anterior
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    return JsonResponse({'error': 'Método no permitido.'}, status=405)
 
 

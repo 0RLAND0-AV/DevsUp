@@ -6,81 +6,59 @@ Perfil
 {% endblock %}
 
 {% block contenidos %}
-    <!--<section class="contentP">
-        <h1>AQUI COLOCAS TU HTML GUILDER SI QUIERES LO CAMBIAS EL SECTIONS CLASS CONTENTP TE LO RECOMIENDO</h1>
-        <p>LA CLAVE ES QUE NO LE QUITES EL INCLUDE BARRAPERFIL.HTML , INCLUSO SI QUIERES PUEDES HACER TU PROPIA PLANTILLA Y AQUI SOLO COLOCARIAS INCLUDE 'TUPLANTILLA.HTML'</p>
-        
-    </section> -->
-    <!--Filtro por productos,, activos e inactivos-->
-    <div class="subBarraNanvegacion">
-        <div class="filtro-fechas-container">
-            <label for="filtro">Selecciona un filtro:</label>
-            <select id="filtro" name="filtro" onchange="this.form.submit()">
-                <option value="todos">Todos los productos</option>
-                <option value="activos">Productos activos</option>
-                <option value="inactivos">Productos inactivos</option>
-            </select>
-        </div>
-        
-        <!--Filtro por fechas -->
-        <div class="filtro-fechas-container">
-            <label for="filtro-fechas">Filtro por fechas:</label>
-            <select id="filtro-fechas" name="filtro-fechas" onchange="this.form.submit()">
-                <option value="ascendente">Fechas Ascendentes</option>
-                <option value="descendente">Fechas Descendentes</option>
-                <option value="mes">Filtrar por Mes</option>
-                <option value="año">Filtrar por Año</option>
-            </select>
-        </div>
-    
-        <!-- Div para editar -->
-        <div class="editar-container">
-            <button id="editarSeleccionados">Editar Producto</button>
-        </div>
-    
-        <!-- Div para eliminar -->
-        <div class="eliminar-container">
-            <input type="checkbox" id="seleccionar-todo" onclick="toggleCheckboxes(this)"> Seleccionar todo
-            <button id="eliminarSeleccionados">Eliminar seleccionados</button>
-        </div>
+<!-- Sub Barra de Navegación -->
+<div class="subBarraNanvegacion">
+    <div class="filtro-fechas-container">
+        <label for="filtro">Selecciona un filtro:</label>
+        <select id="filtro" name="filtro" onchange="this.form.submit()">
+            <option value="todos">Todos los productos</option>
+            <option value="activos">Productos activos</option>
+            <option value="inactivos">Productos inactivos</option>
+        </select>
     </div>
-    
+
+    <div class="filtro-fechas-container">
+        <label for="filtro-fechas">Filtro por fechas:</label>
+        <select id="filtro-fechas" name="filtro-fechas" onchange="this.form.submit()">
+            <option value="ascendente">Fechas Ascendentes</option>
+            <option value="descendente">Fechas Descendentes</option>
+            <option value="mes">Filtrar por Mes</option>
+            <option value="año">Filtrar por Año</option>
+        </select>
+    </div>
+
+    <div class="eliminar-container">
+        <input type="checkbox" id="seleccionar-todo" onclick="toggleCheckboxes(this)"> Seleccionar todo
+        <button id="eliminarSeleccionados">Eliminar seleccionados</button>
+    </div>
+</div>
+
+<!-- Contenedor de Productos -->
 <div class="ContenedorProductos">
     <div class="product-gridd" id="product-gridd">
         {% for producto in misProductos %}
         <div class="tarjeta-productoo" data-subcategoria-id="{{ producto.subcategoria.id }}">
-            
-            <!-- Checkbox de selección -->
-            <!--<div class="seleccion-productoo">
-                <input type="checkbox" class="checkbox-productoo" data-id="{{ producto.id }}">
-            </div>-->
             <div class="seleccion-productoo">
                 <label class="checkbox-burbuja">
                     <input type="checkbox" class="checkbox-productoo" data-id="{{ producto.id }}">
                     <span></span>
                 </label>
             </div>
-            
-    
-            <!-- Enlace en la imagen para detalles del producto -->
+
             <a href="{% url 'detalle_producto' producto.id %}">
-                <img src="{{ producto.imagenes.first.ruta.url }}" 
-                     alt="{{ producto.nombre }}" 
-                     class="imagen-productoo">
+                <img src="{{ producto.imagenes.first.ruta.url }}" alt="{{ producto.nombre }}" class="imagen-productoo">
             </a>
-    
-            <!-- Enlace en el nombre para los detalles del producto -->
+
             <a class="nombre-productoo" href="{% url 'detalle_producto' producto.id %}">
                 <h3>{{ producto.nombre }}</h3>
             </a>
-    
+
             <h4 class="subcategoria-productoo">{{ producto.subcategoria.nombre }}</h4>
             <div class="ContenedorDescripcion">
                 <p class="descripcion-productoo">{{ producto.descripcion }}</p>
             </div>
             <span class="precio-productoo">{{ producto.precio }} Bs</span>
-    
-            <!-- Estado del producto -->
+
             <button class="boton-estado {% if producto.estado_producto %}activo{% else %}inactivo{% endif %}">
                 {% if producto.estado_producto %}
                     Activo
@@ -88,25 +66,28 @@ Perfil
                     Inactivo
                 {% endif %}
             </button>
-            
-            <!-- Fecha de creación -->
+
             <p class="fecha-publicacionn">
                 Publicado el: {{ producto.fecha_creacion|date:"d/m/Y H:i" }}
             </p>
-    
-            <!-- Botón para editar el producto -->
-            <a href="{% url 'detalle_producto' producto.id %}" class="boton-editar">
-                Editar Producto
-            </a>
+
+            <a href="{% url 'detalle_producto' producto.id %}" class="boton-editar">Editar Producto</a>
         </div>
         {% empty %}
         <div class="sin-productos">
             <p>No hay productos disponibles en este momento.</p>
         </div>
         {% endfor %}
-    </div>  
-</div>      
-    {% include 'barraPerfil.html' %}
+    </div>
+</div>
+
+<!-- Formulario oculto para eliminar productos -->
+<form id="form-eliminar-productos" method="POST" action="{% url 'eliminar_productos' %}" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="product_ids" id="product-ids-input">
+</form>
+
+{% include 'barraPerfil.html' %}
 {% endblock %}
 
 <!--{% block materiales %}

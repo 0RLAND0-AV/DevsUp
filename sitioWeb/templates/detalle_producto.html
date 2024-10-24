@@ -91,9 +91,11 @@ Detalle del producto
             <button type="submit" id="boton-guardar-producto" style="display: none;">Guardar Cambios</button>
         </form>
 
-        <button id="editar-producto">Editar Producto</button>
-        <button id="eliminar-producto" data-url="{% url 'eliminar_producto' producto.id %}">Eliminar Producto</button>
-
+        <!-- Contenedor de los botones de acción -->
+        <div id="producto-formulario-buttons">
+            <button id="editar-producto">Editar Producto</button>
+            <button id="eliminar-producto" data-url="{% url 'eliminar_producto' producto.id %}">Eliminar Producto</button>
+        </div>
     </div>
 
     {% include 'barraPerfil.html' %}

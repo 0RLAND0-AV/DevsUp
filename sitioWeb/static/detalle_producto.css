@@ -14,34 +14,36 @@
 /* Encabezado del contenedor */
 #detalle-producto-container h2 {
     text-align: center;
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 25px;
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 10px;
+    color: #02735e;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #4CAF50;
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
 /* Estilos para etiquetas */
 #producto-formulario label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #333;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #555;
 }
 
-/* Estilos para campos de texto y números */
+/* Campos de texto, números y selects */
 #producto-formulario input[type="text"],
 #producto-formulario input[type="number"],
 #producto-formulario textarea,
 #producto-formulario select {
     width: 100%;
-    padding: 12px;
+    padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
     font-size: 16px;
-    background-color: #fff;
-    transition: border-color 0.3s ease;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
 }
 
 #producto-formulario input[type="text"]:focus,
@@ -49,44 +51,65 @@
 #producto-formulario textarea:focus,
 #producto-formulario select:focus {
     border-color: #4CAF50;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
     outline: none;
 }
 
 /* Área de texto */
 #producto-formulario textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 120px;
 }
 
 /* Botones */
 button {
-    padding: 12px 20px;
+    width: 48%;
+    padding: 15px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 10px 0;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
 }
 
 button:hover {
     background-color: #45a049;
 }
 
-/* Botón de guardar */
-#boton-guardar-producto {
-    display: none;
-    width: 100%;
+#producto-formulario-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
-/* Botones de editar y eliminar */
-#editar-producto,
-#eliminar-producto {
+#producto-formulario-buttons button {
     width: 48%;
-    margin: 5px;
-    display: inline-block;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+/* Botones de guardar y eliminar */
+#boton-guardar-producto {
+    background-color: #03a678;
+    width: 100%;
+    display: none;
+}
+#boton-guardar-producto:hover {
+    background-color: #f27405;
+}
+
+#editar-producto {
+    background-color: #03a678;
+}
+
+#editar-producto:hover {
+    background-color: #f27405;
 }
 
 #eliminar-producto {
@@ -100,14 +123,16 @@ button:hover {
 /* Checkbox */
 #producto-formulario input[type="checkbox"] {
     margin-right: 10px;
+    transform: scale(1.2);
 }
 
 /* Imágenes del producto */
 #imagenes-producto h3 {
-    margin-top: 20px;
-    color: #333;
-    font-size: 20px;
-    margin-bottom: 10px;
+    margin-top: 30px;
+    color: #444;
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: 500;
 }
 
 #imagenes-producto ul {
@@ -115,15 +140,21 @@ button:hover {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
 }
 
 #imagenes-producto li {
     position: relative;
-    background-color: #f1f1f1;
+    background-color: #fff;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+#imagenes-producto li:hover {
+    transform: scale(1.05);
 }
 
 #imagenes-producto img {
@@ -131,32 +162,30 @@ button:hover {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 #imagenes-producto input[type="checkbox"] {
     position: absolute;
     top: 10px;
     right: 10px;
-    transform: scale(1.3);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     #detalle-producto-container {
-        margin-left: 20px;
-        padding: 15px;
+        width: 95%;
+        padding: 20px;
     }
 
-    #producto-formulario input[type="text"],
-    #producto-formulario input[type="number"],
+    #producto-formulario input,
     #producto-formulario textarea,
     #producto-formulario select {
         font-size: 14px;
     }
 
     button {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     #editar-producto, #eliminar-producto {
@@ -166,6 +195,11 @@ button:hover {
 
 @media (max-width: 600px) {
     #detalle-producto-container {
-        padding: 10px;
+        padding: 15px;
+    }
+
+    #imagenes-producto img {
+        width: 80px;
+        height: 80px;
     }
 }
