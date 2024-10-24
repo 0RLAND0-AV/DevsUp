@@ -3,8 +3,8 @@ from .models import Usuario ,Categoria, subCategoria , Producto , Imagenes ,Depa
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
-    fields=["nombre","contraseña","correo","celular","foto","estadoUsuario"]
-    list_display =["nombre","correo"] #lo que se va mostrar
+    fields=["nombre","contraseña","correo","celular","foto","estadoUsuario","billetera"]
+    list_display =["nombre","correo","billetera"] #lo que se va mostrar
 admin.site.register(Usuario,UserAdmin)#forma para registrar 1
 
 
