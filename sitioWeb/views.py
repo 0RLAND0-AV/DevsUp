@@ -199,7 +199,7 @@ def ofertarMView(request):
     if request.method == 'POST':
         # Obtener los datos del formulario
         titulo = request.POST.get('titulo')
-        provincia = 'Yacuma'
+        provincia = request.POST.get('provincia')
         direccion = request.POST.get('urlMapa')
         material = request.POST.get('material')
         precio = request.POST.get('precio')
