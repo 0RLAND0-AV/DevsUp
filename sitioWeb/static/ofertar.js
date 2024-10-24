@@ -1,3 +1,55 @@
+(function () {
+    'use strict';
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation');
+    
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            // Obtener los campos de título y descripción
+            const tituloInput = document.getElementById('titulo');
+            const descripcionInput = document.getElementById('descripcion');
+
+            /* Verificar que el título y la descripción tengan al menos 1 carácter
+            if (tituloInput.value.trim().length < 10 || descripcionInput.value.trim().length < 1) {
+                event.preventDefault();
+                event.stopPropagation();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campo vacío',
+                    text: 'El título y la descripción deben tener al menos 10 carácter.',
+                    confirmButtonText: 'Entendido',
+                    confirmButtonColor: '#02735E' // Color verde
+                });
+                return; // Terminar la función si hay campos vacíos
+            }*/
+
+            // Validar los archivos antes de la validación del formulario
+            if (!validarArchivos() || !form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                // Mostrar alerta con SweetAlert si faltan campos
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Formulario incompleto',
+                    text: 'Por favor, completa todos los campos requeridos y selecciona archivos válidos antes de ofertar.',
+                    confirmButtonText: 'Entendido',
+                    confirmButtonColor: '#02735E' // Color verde
+                });
+            }
+
+            // Agregar la clase de validación de Bootstrap
+            form.classList.add('was-validated');
+
+            // Si el formulario es válido, manejar el envío
+            if (form.checkValidity()) {
+                validarFormulario(event);
+            }
+        }, false);
+    });
+})();
+
 // Módulo de validación y manejo de archivos
 const validarArchivos = () => {
     const archivoInput = document.getElementById('archivo');
@@ -56,52 +108,26 @@ const validarArchivos = () => {
     // Mostrar nombres de archivos seleccionados en el elemento <span>
     if (validFiles.length > 0) {
         fileNameDisplay.textContent = `Archivos seleccionados: ${validFiles.map(file => file.name).join(', ')}`;
+        fileNameDisplay.style.color = 'black'; // Cambiar el color a negro si hay archivos válidos
     } else {
-        fileNameDisplay.textContent = "No se ha seleccionado archivo válido";
+        fileNameDisplay.textContent = "Debe seleccionar almenos una foto para su publicacion";
+        fileNameDisplay.style.color = 'red'; // Cambiar el color a rojo si no hay archivos válidos
     }
     return validFiles.length > 0; // Retorna true si hay archivos válidos
 };
 
 
 
-
-// Habilitar o deshabilitar el botón de ofertar
-const actualizarEstadoBotonOfertar = () => {
-    const buttonOfertar = document.getElementById('button-ofertar');
-    const archivoInput = document.getElementById('archivo'); // Obtener el input de archivos
-    const provincia = document.getElementById('provincia').value;
-    const urlMapa = document.getElementById('urlMapa').value;
-    const material = document.getElementById('material').value;
-    const precio = parseFloat(document.getElementById('precio').value); // Asegúrate de convertir el valor a un número
-    const descripcion = document.getElementById('descripcion').value; // Nueva validación
-    const departamento = document.getElementById('departamento').value; // Nueva validación
-    const terminos = document.getElementById('terminos').checked;
-
-    // Verificar si hay archivos seleccionados
-    const hayArchivosSeleccionados = archivoInput.files.length > 0;
-
-    // Verifica que todos los campos estén llenos, que el precio sea mayor a 0 y que haya archivos seleccionados
-    const camposCompletos = provincia && urlMapa && material && precio > 0 && descripcion && departamento && terminos && hayArchivosSeleccionados;
-
-    if (camposCompletos) {
-        buttonOfertar.disabled = false;
-        buttonOfertar.style.backgroundColor = '#02735E'; // Verde oscuro
-    } else {
-        buttonOfertar.disabled = true;
-        buttonOfertar.style.backgroundColor = '#666666'; // Color gris oscuro (cuando está deshabilitado)
-    }
-};
-
-// Módulo de validación del formulario y tardanza del envio del Form, tod para que se vea la alerta
+// Módulo de validación del formulario y tardanza del envío del Form
 const validarFormulario = (event) => {
-    // Mostrar la alerta de éxito y retrasar el envío del formulario
     event.preventDefault(); // Prevenir el envío del formulario
+    // Si todo está completo, mostrar la alerta de éxito y retrasar el envío del formulario
     Swal.fire({
         position: "top-end",
         icon: "success",
         title: "Tu oferta fue publicada correctamente",
         showConfirmButton: false,
-        timer: 1750 // 1.5 segundos
+        timer: 1750 // 1.75 segundos
     });
 
     setTimeout(() => {
@@ -109,8 +135,10 @@ const validarFormulario = (event) => {
     }, 1750);
 };
 
+
 // Módulo de inicialización de eventos
 const inicializarEventos = () => {
+    
     //Añadir reporte de JS al apretar el boton Cancelar
     document.getElementById('button-cancelar').addEventListener('click', function() {
         Swal.fire({
@@ -138,14 +166,6 @@ const inicializarEventos = () => {
  
     // Asociar la validación de archivos al cambio del input de archivos
     document.getElementById('archivo').addEventListener('change', validarArchivos);
-    document.getElementById('archivo').addEventListener('change', actualizarEstadoBotonOfertar);
-    // Asociar la validación completa del formulario al submit
-    document.getElementById('ofertaForm').addEventListener('submit', validarFormulario);
-
-     // Habilitar y deshabilitar el botón de Ofertar según la validación
-    document.querySelectorAll('#provincia, #urlMapa, #material, #precio, #descripcion, #departamento, #terminos')
-    .forEach(input => input.addEventListener('input', actualizarEstadoBotonOfertar));
-
     // Asociar el cambio del departamento para actualizar las provincias
     document.getElementById('departamento').addEventListener('change', function() {
         const provinciaSelect = document.getElementById('provincia');
