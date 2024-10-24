@@ -22,7 +22,7 @@ def baseView(request):
     user = None
     if user_id:
         user = Usuario.objects.get(idUsuario=user_id)
-    productos = Producto.objects.all() 
+    productos = Producto.objects.filter(estado_producto=True) #solo mostrare los productos que este activos
     categorias = Categoria.objects.prefetch_related('subcategorias').all()  # Obtiene todas las categorías y sus subcategorías   
     carritos = CarritoProducto.objects.filter(usuario=user)
     return render(request, "base.html",{'user': user, 'productos': productos, 'categorias': categorias,'carritos': carritos})
