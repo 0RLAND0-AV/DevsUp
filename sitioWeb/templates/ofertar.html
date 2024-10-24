@@ -5,7 +5,8 @@
     {% include 'cuenta.html' %}
 {% endblock %}
 {% block contenidos %}
-<div class="container2">
+<!--class="profile-config"-->
+<div class="container2" >
     <h1>Ofertar Material</h1>
     <form id="ofertaForm" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -118,6 +119,7 @@
         </div>
     </form>
 </div>
+{% include 'barraPerfil.html' %}
 {% endblock %}
 {% block extra_js %}
     <script src="{% static 'perfil.js' %}"></script>
