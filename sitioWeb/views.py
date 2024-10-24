@@ -148,7 +148,14 @@ def agregar_al_carrito(request, producto_id):
             print(f"Producto encontrado: {producto.nombre}")
             user_id = request.session.get('user_id')
             user = Usuario.objects.get(idUsuario=user_id)
-            print(f"Producto encontrado: {user.nombre}")
+            print(f"Usuario encontrado: {user.nombre}")
+
+            # Verificación: Evitar que el usuario agregue su propio producto
+            if producto.usuario == user:
+                mensaje = "No puedes agregar tu propio producto al carrito."
+                print(mensaje)
+                return JsonResponse({'mensaje': mensaje, 'success': False})
+
 
             carrito_producto, created = CarritoProducto.objects.get_or_create(usuario=user, producto=producto)
             print(f"Item del carrito {'creado' if created else 'ya existente'}: {carrito_producto}")
