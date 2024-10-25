@@ -88,3 +88,10 @@ document.getElementById('eliminarSeleccionados').addEventListener('click', funct
         document.getElementById('form-eliminar-productos').submit();
     }
 });
+
+function toggleCheckboxes(source) {
+    const checkboxes = document.querySelectorAll('.checkbox-productoo');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = source.checked;
+    });
+}

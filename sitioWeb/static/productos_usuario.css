@@ -131,6 +131,34 @@
 
 /* Responsive: Asegura que el filtro se vea bien en pantallas pequeñas */
 @media (max-width: 768px) {
+    main{
+        display: flex;
+        flex-direction: column; 
+        padding: 0;
+        margin-top: 120px;
+        
+    }
+
+    .menu-perfil {
+        
+        width: 100%;
+        order:1;
+        top: -43px;
+    }
+    
+    .subBarraNanvegacion{
+        margin-right: 30px;
+        margin-top:16px;
+        order:2;
+        
+        position:absolute;
+        
+   
+    }
+    .ContenedorProductos{
+        
+        margin-top: 130px;
+    }
     .filtro {
         flex-direction: column; /* Cambia a columna en pantallas pequeñas */
         align-items: flex-start; /* Alinea a la izquierda */
@@ -604,6 +632,8 @@ input[type="file"] {
 }
 
 @media (max-width: 600px) {
+
+   
     
     .form-group.inline {
         display: block; /* Usar flexbox para alinear elementos en línea */

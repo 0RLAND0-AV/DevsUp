@@ -204,9 +204,29 @@ button:hover {
 
 /* Responsive */
 @media (max-width: 768px) {
+    main{
+        display: flex;
+        flex-direction: column; 
+        padding: 0;
+        margin-top: 120px;
+        
+    }
+
+    .menu-perfil {
+        width: 100%;
+        order:1;
+        top: -43px;
+    }
+    
+    
+
     #detalle-producto-container {
+        order:2;
+        
         margin-left: 20px;
         padding: 15px;
+        
+        
     }
 
     #producto-formulario input[type="text"],
