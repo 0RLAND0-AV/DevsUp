@@ -72,28 +72,37 @@ Detalle del producto
 
             <label for="estado-producto-activo">¿Producto Activo?</label>
             <input type="checkbox" id="estado-producto-activo" name="estado_producto" {% if producto.estado_producto %}checked{% endif %} disabled>
-
+            
             <div id="imagenes-producto">
-                <h3>Imágenes</h3>
+                <div id="imagenes-titulo">
+                    <h3>Imágenes</h3>
+                    <label id="nuevas-imagenes1" class="nuevas-imagenes1" for="nuevas-imagenes" hidden title="Selecciona imágenes para añadir"> + </label>
+                    <input type="file" id="nuevas-imagenes" name="nuevas_imagenes" multiple disabled>
+                    <label id="borrar-imagenes1" class="borrar-imagenes1" for="borrar-imagenes" hidden title="Selecciona imágenes para eliminar"><i class="fa-solid fa-trash"></i> </label>
+                </div>
                 <ul>
                     {% for imagen in producto.imagenes.all %}
                         <li>
                             <img src="{{ imagen.ruta.url }}" alt="Imagen de {{ producto.nombre }}" width="100">
-                            <input type="checkbox" name="imagenes_a_eliminar" value="{{ imagen.id }}" disabled> Eliminar
+                            <input type="checkbox" name="imagenes_a_eliminar" value="{{ imagen.id }}" disabled hidden> 
                         </li>
                     {% endfor %}
                 </ul>
+                
             </div>
 
-            <label for="nuevas-imagenes">Añadir nuevas imágenes:</label>
-            <input type="file" id="nuevas-imagenes" name="nuevas_imagenes" multiple disabled>
-
-            <button type="submit" id="boton-guardar-producto" style="display: none;">Guardar Cambios</button>
+            
+            <div id="botones-editar" class="botones-editar">
+                <button type="submit" id="boton-guardar-producto" style="display: none;">Guardar Cambios</button>
+                <button  id="boton-cancelar-producto"   >Cancelar</button>
+            </div>
+            
         </form>
 
         <!-- Contenedor de los botones de acción -->
         <div id="producto-formulario-buttons">
             <button id="editar-producto">Editar Producto</button>
+        
             <button id="eliminar-producto" data-url="{% url 'eliminar_producto' producto.id %}">Eliminar Producto</button>
         </div>
     </div>

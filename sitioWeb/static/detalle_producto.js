@@ -8,13 +8,29 @@ document.getElementById('editar-producto').addEventListener('click', function() 
         console.log('Habilitando campo:', input.name); // Verificar cada campo que está siendo habilitado
         input.disabled = false;
     });
+    // Mostrar el label de "nuevas-imagenes" y habilitar el input correspondiente
+    document.querySelector('label[for="nuevas-imagenes"]').hidden = false;
+    // Mostrar el label de "nuevas-imagenes" y habilitar el input correspondiente
+    document.querySelector('label[for="borrar-imagenes"]').hidden = false;
+    
+    // Habilitar todos los checkboxes de "imagenes_a_eliminar"
+    const checkboxes = document.querySelectorAll('input[name="imagenes_a_eliminar"]');
 
-    // Mostrar el botón de guardar
+    checkboxes.forEach((checkbox) => {
+        checkbox.disabled = false; // Habilitar todos los checkboxes
+        checkbox.hidden = false; // Asegurarse de que no estén ocultos
+    });
+
+    // Mostrar el botón de guardar y cancelar
     document.getElementById('boton-guardar-producto').style.display = 'inline-block'; 
+    document.getElementById('boton-cancelar-producto').style.display = 'inline-block'; 
     console.log('Botón Guardar mostrado.');
 
     // Ocultar el botón de editar
     this.style.display = 'none';
+
+    // ocultar el botón de eliminar
+    document.getElementById("eliminar-producto").hidden = true; // Corrección aquí
 });
 
 

@@ -5,6 +5,7 @@
     {% include 'cuenta.html' %}
 {% endblock %}
 {% block contenidos %}
+{% include 'barraPerfil.html' %}
 <!--class="profile-config"-->
 <div class="container2" >
     <h1>Ofertar Material</h1>
@@ -146,7 +147,7 @@
         </div>
     </form>
 </div>
-{% include 'barraPerfil.html' %}
+
 {% endblock %}
 {% block extra_js %}
     <script src="{% static 'perfil.js' %}"></script>

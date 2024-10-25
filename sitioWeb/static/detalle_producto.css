@@ -26,7 +26,7 @@
     display: block;
     font-weight: bold;
     margin-bottom: 8px;
-    color: #333;
+  
 }
 
 /* Estilos para campos de texto y números */
@@ -58,6 +58,57 @@
     min-height: 100px;
 }
 
+/* Contenedor de título y opciones de imágenes en una línea */
+#imagenes-titulo {
+    display: flex;
+    align-items: center; /* Centra los elementos verticalmente */
+    gap: 15px; /* Espacio entre los elementos */
+    margin-bottom: 10px;
+}
+
+#imagenes-titulo h3 {
+    margin: 0; /* Quitar margen para alinear con los labels */
+    font-size: 20px;
+    color: #333;
+}
+/* Estilos para el botón "Añadir" , es un Label pero lo daremos estilos de boton :v */
+.nuevas-imagenes1 {
+    display: inline-block; /* Hacer que el label actúe como un botón */
+    padding: 7px 14px; /* Espaciado interior */
+    color: white; /* Color del texto */
+    background-color: #02735E; /* Verde oscuro */
+    font-size: 16px; /* Tamaño de fuente */
+    border: none; /* Sin bordes */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    text-align: center; /* Centrar texto */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+/* Efecto hover para el botón "Añadir" */
+.nuevas-imagenes1:hover {
+    background-color: #004d00; /* Color más oscuro al pasar el ratón */
+}
+
+/* Estilos para el botón "Eliminar" */
+.borrar-imagenes1 {
+    display: inline-block; /* Hacer que el label actúe como un botón */
+    padding: 7px 14px; /* Espaciado interior */
+    color: white; /* Color del texto */
+    background-color: #c02323; /* Rojo oscuro */
+    font-size: 16px; /* Tamaño de fuente */
+    border: none; /* Sin bordes */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    text-align: center; /* Centrar texto */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+/* Efecto hover para el botón "Eliminar" */
+.borrar-imagenes1:hover {
+    background-color: #8b0000; /* Color más oscuro al pasar el ratón */
+}
+
 /* Botones */
 button {
     padding: 12px 20px;
@@ -77,20 +128,30 @@ button:hover {
 
 /* Botón de guardar */
 #boton-guardar-producto {
+    background-color: #03a678;
     display: none;
     width: 100%;
 }
-
+/* Botón de cancelar Editar*/
+#boton-cancelar-producto {
+    background-color: #F27405;
+   
+    display: none;
+    width: 100%;
+}
 /* Botones de editar y eliminar */
-#editar-producto,
-#eliminar-producto {
+#editar-producto {
+    background-color: #02735E;
     width: 48%;
     margin: 5px;
     display: inline-block;
 }
 
 #eliminar-producto {
-    background-color: #f44336;
+    background-color: #731702;
+    width: 48%;
+    margin: 5px;
+    display: inline-block;
 }
 
 #eliminar-producto:hover {
