@@ -58,49 +58,60 @@ const validarArchivos = () => {
 
     if (!archivoInput) return false;
 
-    const fileList = Array.from(archivoInput.files);
     const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
     const maxFileSize = 2 * 1024 * 1024; // 2 MB en bytes
     const maxFiles = 8; // Máximo de archivos permitidos
     const validFiles = [];
     const removedFiles = [];
 
+    // Si se excede el número máximo de archivos
+    if (archivoInput.files.length > maxFiles) {
+        // Convertimos los archivos a un array y tomamos solo los primeros 8 archivos
+        const selectedFiles = Array.from(archivoInput.files).slice(0, maxFiles);
+
+        // Creamos un DataTransfer para asignar los archivos permitidos de nuevo al input
+        const dataTransfer = new DataTransfer();
+        selectedFiles.forEach(file => dataTransfer.items.add(file));
+        archivoInput.files = dataTransfer.files;
+
+        // Alerta de que se eliminaron archivos adicionales
+        Swal.fire({
+            icon: 'warning',
+            title: 'Límite de archivos',
+            text: `Solo se permiten ${maxFiles} archivos. Los archivos adicionales han sido eliminados automáticamente.`
+        });
+    }
+
     // Limpiar cualquier vista previa anterior
     previewContainer.innerHTML = "";
 
     // Filtrar archivos válidos y acumular los que se eliminarán
-    fileList.forEach(file => {
+    Array.from(archivoInput.files).forEach(file => {
         const isValidType = validTypes.includes(file.type);
         const isValidSize = file.size <= maxFileSize;
 
         if (!isValidType || !isValidSize) {
             removedFiles.push(file.name); // Archivo no válido
         } else {
-            // Solo agregar hasta un máximo de archivos válidos
-            if (validFiles.length < maxFiles) {
-                validFiles.push(file);
+            validFiles.push(file);
 
-                // Crear una miniatura para cada imagen válida
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    previewContainer.appendChild(img); // Añadir la miniatura al contenedor
-                };
-                reader.readAsDataURL(file); // Leer el archivo como DataURL para mostrar la imagen
-            } else {
-                // Si se alcanza el máximo, añadir a la lista de eliminados
-                removedFiles.push(file.name);
-            }
+            // Crear una miniatura para cada imagen válida
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                previewContainer.appendChild(img); // Añadir la miniatura al contenedor
+            };
+            reader.readAsDataURL(file);
         }
     });
 
-    // Mostrar alerta personalizada si hay archivos eliminados
+    // Alerta de archivos eliminados por no ser válidos en formato o tamaño
     if (removedFiles.length > 0) {
         Swal.fire({
             icon: 'error',
             title: 'Archivos eliminados',
-            text: `Los siguientes archivos fueron eliminados porque se excedió el límite de ${maxFiles} archivos válidos: ${removedFiles.join(', ')}`,
+            text: `Algunos archivos fueron eliminados por no cumplir con el formato o tamaño permitido: ${removedFiles.join(', ')}`,
             footer: '<label>Solo se aceptan 8 archivos en formato [.jpg, .jpeg, .png] de peso máximo 2MB</label>'
         });
     }
@@ -110,7 +121,7 @@ const validarArchivos = () => {
         fileNameDisplay.textContent = `Archivos seleccionados: ${validFiles.map(file => file.name).join(', ')}`;
         fileNameDisplay.style.color = 'black'; // Cambiar el color a negro si hay archivos válidos
     } else {
-        fileNameDisplay.textContent = "Debe seleccionar almenos una foto para su publicacion";
+        fileNameDisplay.textContent = "Debe seleccionar al menos una foto para su publicación";
         fileNameDisplay.style.color = 'red'; // Cambiar el color a rojo si no hay archivos válidos
     }
     return validFiles.length > 0; // Retorna true si hay archivos válidos
