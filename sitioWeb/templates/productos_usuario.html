@@ -22,8 +22,6 @@ Perfil
         <select id="filtro-fechas" name="filtro-fechas" onchange="this.form.submit()">
             <option value="ascendente">Fechas Ascendentes</option>
             <option value="descendente">Fechas Descendentes</option>
-            <option value="mes">Filtrar por Mes</option>
-            <option value="año">Filtrar por Año</option>
         </select>
     </div>
 
@@ -66,11 +64,11 @@ Perfil
                     Inactivo
                 {% endif %}
             </button>
-
-            <p class="fecha-publicacionn">
-                Publicado el: {{ producto.fecha_creacion|date:"d/m/Y H:i" }}
-            </p>
-
+            <div class="fecha-publicacion"> 
+                <p class="fecha-publicacionn">
+                    Publicado el: {{ producto.fecha_creacion|date:"d/m/Y H:i" }}
+                </p>
+            </div>
             <a href="{% url 'detalle_producto' producto.id %}" id="editar-producto2" class="boton-editar">Editar Producto</a>
         </div>
         {% empty %}

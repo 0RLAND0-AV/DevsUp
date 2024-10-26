@@ -1,8 +1,7 @@
-
 .subBarraNanvegacion{
     position: fixed;
     top: 12%;
-    left: 15%;
+    left: 0%;
     background: var(--primary-color);
     z-index: 1;
     font-size: 12px;
@@ -12,7 +11,7 @@
     padding: 2px; /* Espacio interno */
     background-color: var(--secondary-color); /* Fondo claro */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    width: 85%;
+    width: 100%;
     color: var(--white);
 }
 
@@ -29,7 +28,7 @@
     color: var(--white);
 }
 .filtro-fechas-container{
-    margin-left: 80px;
+    margin-left: 170px;
 }
 .filtro-fechas-container select:hover {
     background-color: var(--secondary-color);
@@ -50,7 +49,7 @@
 
 
 #eliminarSeleccionados{
-    padding: 10px 15px; /* Espacio interno del botón */
+    padding: 7px 12px; /* Espacio interno del botón */
     border: none; /* Sin borde */
     border-radius: 25px; /* Bordes redondeados */
     background-color: red; /* Color de fondo del botón */
@@ -69,7 +68,7 @@
     margin-right: 10px; /* Espacio entre el checkbox y el botón */
     transform: scale(1.2); /* Aumenta el tamaño del checkbox */
     cursor: pointer; /* Cambia el cursor al pasar sobre el checkbox */
-    margin-left: 15px;
+    margin-left: 30px;
 }
 
 
@@ -175,7 +174,7 @@
 .ContenedorProductos{
     position: absolute;
     top: 10%;
-    left: 15%;
+    left: 13%;
     width: 85%;
     margin-bottom: 10%;
 }
@@ -200,7 +199,7 @@
     background-color:transparent;
     box-shadow: 2px 2px 5px 1px var(--secondary-color);
     transition: transform 0.2s ease-in-out;
-    height: 475px;
+    height: 465px;
     transform: scale(1.0);
 }
 
@@ -222,6 +221,7 @@
 }
 
 .checkbox-burbuja span {
+    margin-top: 0;
     width: 25px;
     height: 25px;
     background: #eee; /* Color inicial */
@@ -244,7 +244,7 @@
     top: 50%;
     left: 50%;
     width: 12px;
-    height: 12px;
+    height: 5px;
     background: white;
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(0); /* Ocultar círculo interno */
@@ -268,7 +268,7 @@
 
 /* Nombre del producto */
 .nombre-productoo {
-    font-size: 1.2rem;
+    font-size: 14px;
     font-weight: bold;
     margin: 3px 0;
     text-align: center;
@@ -306,13 +306,14 @@
     color: var(--primary-color);
     font-weight: bold;
     display: block;
-    margin: 10px 0;
+    margin: 3px 0;
     padding:0;
     text-align: center;
 }
 
 /* Estado del producto (indicador de activo o inactivo) */
 .boton-estado {
+    margin: 2px;
     margin-left: 25%;
     padding: 5px 10px;
     border: none;
@@ -342,15 +343,20 @@
 
 
 /* Fecha de publicación */
-.fecha-publicacionn {
-    text-align: center;
+.fecha-publicacion {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    width: 100%;
+    height:30px;
     font-size: 0.85rem;
     color: #7f8c8d;
-    margin-bottom: 20px;
+    margin: 1px;
 }
-
-/* Botón de estado (opcional) */
-
+.fecha-publicacionn {
+    text-align: center;
+    padding:1px;
+}
 /* Mensaje cuando no hay productos */
 .sin-productos {
     text-align: center;
