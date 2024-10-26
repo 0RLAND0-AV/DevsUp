@@ -71,7 +71,7 @@ Detalle del producto
             </select>
 
             <label for="estado-producto-activo">¿Producto Activo?</label>
-            <input type="checkbox" id="estado-producto-activo" name="estado_producto" {% if producto.estado_producto %}checked{% endif %} disabled>
+            <input type="checkbox" id="estado-producto-activo" title="SI LO DESACTIVAS TU PUBLICACION NO SE MOSTRARA EN INICIO" name="estado_producto" {% if producto.estado_producto %}checked{% endif %} disabled>
             
             <div id="imagenes-producto">
                 <div id="imagenes-titulo">

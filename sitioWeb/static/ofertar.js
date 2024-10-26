@@ -127,8 +127,6 @@ const validarArchivos = () => {
     return validFiles.length > 0; // Retorna true si hay archivos válidos
 };
 
-
-
 // Módulo de validación del formulario y tardanza del envío del Form
 const validarFormulario = (event) => {
     event.preventDefault(); // Prevenir el envío del formulario
