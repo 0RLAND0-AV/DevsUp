@@ -1,63 +1,48 @@
-// Filtro por estado (todos, activos, inactivos)
-document.getElementById('filtro').addEventListener('change', function() {
-    const filtro = this.value;
-    const productCards = document.querySelectorAll('.product-card');
+// Filtra productos según el estado y orden de fecha seleccionados
+document.addEventListener("DOMContentLoaded", function() {
+    const filtroEstado = document.getElementById("filtro");
+    const filtroOrden = document.getElementById("filtro-fechas");
+    const productosContainer = document.getElementById("product-gridd");
+    const productos = Array.from(document.querySelectorAll(".tarjeta-productoo"));
 
-    productCards.forEach(card => {
-        const estado = card.querySelector('.Estado').innerText.toLowerCase(); // El estado del producto, por ejemplo, "activo" o "inactivo"
-        if (filtro === 'todos' || estado === filtro) {
-            card.style.display = 'block'; // Mostrar producto
-        } else {
-            card.style.display = 'none'; // Ocultar producto
-        }
-    });
-});
+    function aplicarFiltros() {
+        const estadoSeleccionado = filtroEstado.value;
+        const ordenSeleccionado = filtroOrden.value;
 
-// Filtro por fechas (ascendente, descendente, por mes/año)
-document.getElementById('filtro-fechas').addEventListener('change', function() {
-    const filtroFechas = this.value;
-    const productCards = Array.from(document.querySelectorAll('.product-card'));
-
-    // Convertir fechas a objetos Date y ordenar
-    productCards.sort((a, b) => {
-        const fechaA = new Date(a.querySelector('.fecha').innerText); // Asumiendo que hay un elemento con clase .fecha con la fecha del producto
-        const fechaB = new Date(b.querySelector('.fecha').innerText);
-
-        if (filtroFechas === 'ascendente') {
-            return fechaA - fechaB; // Ordenar de más antiguo a más reciente
-        } else if (filtroFechas === 'descendente') {
-            return fechaB - fechaA; // Ordenar de más reciente a más antiguo
-        }
-        return 0; // No realizar ningún cambio si no es ascendente o descendente
-    });
-
-    // Reorganizar los productos en el DOM según el nuevo orden
-    const productGrid = document.getElementById('product-grid');
-    productCards.forEach(card => {
-        productGrid.appendChild(card);
-    });
-
-    // Si el filtro es por mes o por año
-    if (filtroFechas === 'mes' || filtroFechas === 'año') {
-        const currentDate = new Date();
-        productCards.forEach(card => {
-            const fechaProducto = new Date(card.querySelector('.fecha').innerText);
-
-            if (filtroFechas === 'mes') {
-                if (fechaProducto.getMonth() === currentDate.getMonth() && fechaProducto.getFullYear() === currentDate.getFullYear()) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            } else if (filtroFechas === 'año') {
-                if (fechaProducto.getFullYear() === currentDate.getFullYear()) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            }
+        // Filtrar por estado
+        const productosFiltrados = productos.filter(producto => {
+            const esActivo = producto.querySelector(".boton-estado").classList.contains("activo");
+            return (
+                estadoSeleccionado === "todos" ||
+                (estadoSeleccionado === "activos" && esActivo) ||
+                (estadoSeleccionado === "inactivos" && !esActivo)
+            );
         });
+
+        // Ordenar por fecha
+        productosFiltrados.sort((a, b) => {
+            // Convertir la fecha del formato 'd/m/Y H:i' a 'Y-m-d H:i'
+            const obtenerFecha = (fechaTexto) => {
+                const [fecha, hora] = fechaTexto.replace("Publicado el: ", "").trim().split(" ");
+                const [dia, mes, año] = fecha.split("/").map(Number);
+                return new Date(año, mes - 1, dia, ...hora.split(":").map(Number));
+            };
+
+            const fechaA = obtenerFecha(a.querySelector(".fecha-publicacionn").textContent);
+            const fechaB = obtenerFecha(b.querySelector(".fecha-publicacionn").textContent);
+            return ordenSeleccionado === "ascendente" ? fechaA - fechaB : fechaB - fechaA;
+        });
+
+        // Limpiar y mostrar productos filtrados y ordenados
+        productosContainer.innerHTML = "";
+        productosFiltrados.forEach(producto => productosContainer.appendChild(producto));
     }
+
+    // Escucha los cambios en los selectores de filtros
+    filtroEstado.addEventListener("change", aplicarFiltros);
+    filtroOrden.addEventListener("change", aplicarFiltros);
+
+    aplicarFiltros(); // Aplicar filtros al cargar la página
 });
 
 

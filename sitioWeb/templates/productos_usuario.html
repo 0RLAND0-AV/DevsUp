@@ -1,4 +1,6 @@
-{% extends 'base.html' %}
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}
@@ -7,9 +9,10 @@ Perfil
 
 {% block contenidos %}
 <!-- Sub Barra de Navegación -->
+<!-- Sub Barra de Navegación -->
 <div class="subBarraNanvegacion">
     <div class="filtro-fechas-container">
-        <label for="filtro">Selecciona un filtro:</label>
+        <label for="filtro">Filtro Estado:</label>
         <select id="filtro" name="filtro" onchange="this.form.submit()">
             <option value="todos">Todos los productos</option>
             <option value="activos">Productos activos</option>
@@ -18,7 +21,7 @@ Perfil
     </div>
 
     <div class="filtro-fechas-container">
-        <label for="filtro-fechas">Filtro por fechas:</label>
+        <label for="filtro-fechas">Filtro Orden:</label>
         <select id="filtro-fechas" name="filtro-fechas" onchange="this.form.submit()">
             <option value="ascendente">Fechas Ascendentes</option>
             <option value="descendente">Fechas Descendentes</option>
@@ -26,10 +29,15 @@ Perfil
     </div>
 
     <div class="eliminar-container">
-        <input type="checkbox" id="seleccionar-todo" onclick="toggleCheckboxes(this)"> Seleccionar todo
-        <button id="eliminarSeleccionados">Eliminar</button>
+        <label for="filtro-fechas">Seleccionar Todo:</label>
+        <label class="checkbox-burbuja">
+            <input type="checkbox" id="seleccionar-todo" onclick="toggleCheckboxes(this)">
+            <span></span>
+        </label>
+        <button id="eliminarSeleccionados">Eliminar <ion-icon name="trash-outline"></ion-icon></button>
     </div>
 </div>
+
 
 <!-- Contenedor de Productos -->
 <div class="ContenedorProductos">
