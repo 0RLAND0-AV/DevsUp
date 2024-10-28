@@ -1,0 +1,4 @@
+*.sqlite3
+/sitioWeb/migrations/
+/sitioWeb/_pycache_/
+/DevsUp/_pycache_/
