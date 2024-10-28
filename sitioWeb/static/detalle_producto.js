@@ -35,8 +35,7 @@ document.getElementById('editar-producto').addEventListener('click', function() 
     document.getElementById("eliminar-producto").hidden = true; // Corrección aquí
 });
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//Restrición para las imagenes 
 function manejarRestriccionesDeImagenes() {
     const inputImagenes = document.getElementById('nuevas-imagenes');
     const previewContainer = document.querySelector('#imagenes-producto ul');
@@ -116,7 +115,6 @@ function manejarRestriccionesDeImagenes() {
 document.addEventListener('DOMContentLoaded', manejarRestriccionesDeImagenes);
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Actualización dinámica de subcategorías según la categoría seleccionada
 document.getElementById('categoria-producto').addEventListener('change', function () {
     const categoriaId = this.value;
