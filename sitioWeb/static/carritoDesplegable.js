@@ -150,6 +150,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
+//Funcion para el CONTADOR del carrito//
 document.addEventListener("DOMContentLoaded", function () {
     updateCartCount();
 
