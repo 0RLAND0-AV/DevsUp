@@ -12,14 +12,35 @@ Detalle del producto
         <form method="POST" enctype="multipart/form-data" id="producto-formulario">
             {% csrf_token %}
 
-            <label for="nombre-producto">Nombre del Producto:</label>
-            <input type="text" id="nombre-producto" name="nombre" value="{{ producto.nombre }}" required disabled>
-
-            <label for="descripcion-producto">Descripción:</label>
-            <textarea id="descripcion-producto" name="descripcion" disabled>{{ producto.descripcion }}</textarea>
-
-            <label for="precio-producto">Precio:</label>
-            <input type="number" step="0.01" id="precio-producto" name="precio" value="{{ producto.precio }}" required disabled>
+            <div class="form-groupp">
+                <label for="nombre-producto">Nombre del Producto <span class="text-rojo">*</span></label>
+                <input class="form-controll" type="text" id="nombre-producto" name="nombre" value="{{ producto.nombre }}" required disabled 
+                       minlength="10" maxlength="100" placeholder="Ingresa el nombre del producto" 
+                       onkeypress="return /^[a-zA-Z0-9\s]*$/.test(event.key)">
+                <div class="invalid-feedback">
+                    El nombre del producto debe tener entre 10 y 100 caracteres.
+                </div>
+            </div>
+            
+            <div class="form-groupp">
+                <label for="descripcion-producto">Descripción <span class="text-rojo">*</span></label>
+                <textarea class="form-controll" id="descripcion-producto" name="descripcion" required disabled 
+                          minlength="15" maxlength="200" placeholder="Añade una descripción...">{{ producto.descripcion }}</textarea>
+                <div class="invalid-feedback">
+                    La descripción debe tener entre 15 y 200 caracteres.
+                </div>
+            </div>
+            
+            <div class="form-groupp">
+                <label for="precio-producto">Precio <span class="text-rojo">*</span></label>
+                <input class="form-controll" type="number" step="0.01" id="precio-producto" name="precio" value="{{ producto.precio }}" 
+                       required disabled min="1" placeholder="Precio Total (Bs)" 
+                       onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
+                <div class="invalid-feedback">
+                    Coloca un precio válido para el producto.
+                </div>
+            </div>
+            
 
             <label for="categoria-producto">Categoría:</label>
             <select id="categoria-producto" name="categoria" disabled>
