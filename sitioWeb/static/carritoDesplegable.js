@@ -149,3 +149,41 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    updateCartCount();
+
+    // Escuchar eventos de eliminación de productos
+    document.querySelectorAll(".remove-from-cart").forEach(button => {
+        button.addEventListener("click", function () {
+            const item = this.closest(".cart-item");
+            item.remove();  // Remover el producto del carrito en el DOM
+
+            // Actualizar el contador
+            updateCartCount();
+        });
+    });
+});
+
+function updateCartCount() {
+    // Contar los elementos con la clase `.cart-item` (productos en el carrito)
+    const cartItems = document.querySelectorAll(".cart-item");
+    const cartCount = cartItems.length;
+
+    // Seleccionar el elemento `span` dentro del botón del carrito
+    const cartCountDisplay = document.querySelector(".dropbtn span");
+    
+    // Actualizar el contenido del `span` con la cantidad de productos
+    cartCountDisplay.textContent = cartCount;
+
+    // Asegurarse de que el estilo se mantenga
+    cartCountDisplay.style.backgroundColor = "#FFA500"; // Color naranja
+    cartCountDisplay.style.color = "white";
+    cartCountDisplay.style.fontWeight = "bold";
+    cartCountDisplay.style.fontSize = "14px";
+    cartCountDisplay.style.padding = "2px 6px";
+    cartCountDisplay.style.borderRadius = "50%";
+    cartCountDisplay.style.marginLeft = "8px";
+    cartCountDisplay.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
+    cartCountDisplay.style.display = "inline-block";
+}

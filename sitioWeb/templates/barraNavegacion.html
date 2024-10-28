@@ -17,7 +17,7 @@
         <a href="{% url 'base' %}" class="nav-link">Inicio</a> <!-- Asegúrate de tener la URL configurada -->
          <!-- Botón del carrito -->
          <div class="dropdown">
-            <button class="dropbtn">Carrito</button>
+            <button class="dropbtn">Carrito <span>0</span></button> <!-- El número inicial es solo para mostrar el formato -->
             <div class="cart-popup" id="cart-popup">
                 <h3>Carrito de Compras</h3>
                 {% if carritos %}
