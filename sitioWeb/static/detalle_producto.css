@@ -11,11 +11,11 @@
     margin-top: 50px;
 }
 
-.form-group {
+.form-groupp {
     margin-bottom: 1rem;
 }
 
-.form-control {
+.form-controll {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     padding: 0.5rem;
@@ -25,13 +25,13 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.form-control:focus {
+.form-controll:focus {
     border-color: #80bdff;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.form-control:invalid {
+.form-controll:invalid {
     border-color: #dc3545;
     box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 }
@@ -46,7 +46,7 @@
     font-size: 0.875em;
 }
 
-.form-control:invalid + .invalid-feedback {
+.form-controll:invalid + .invalid-feedback {
     display: block;
 }
 
