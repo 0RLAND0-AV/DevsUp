@@ -52,6 +52,7 @@ def registroView(request):
         # Obtener los datos del formulario
         nombre = request.POST.get('username')
         correo = request.POST.get('email')
+        
         contraseña = request.POST.get('password')
         confirmar_contraseña = request.POST.get('confirmPassword')
 
