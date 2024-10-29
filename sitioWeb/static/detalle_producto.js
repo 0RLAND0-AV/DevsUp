@@ -34,6 +34,27 @@ document.getElementById('editar-producto').addEventListener('click', function() 
     // ocultar el botón de eliminar
     document.getElementById("eliminar-producto").hidden = true; // Corrección aquí
 });
+// Escuchar el clic en el botón de cancelar
+document.getElementById('boton-cancelar-producto').addEventListener('click', function(event) {
+    event.preventDefault(); // Evita que el formulario se restablezca de inmediato
+
+    // Mostrar alerta de confirmación
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Todos los cambios realizados se perderán al descartar",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#666666",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Descartar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Si el usuario confirma, restablecer el formulario y recargar la página
+            location.reload();
+        }
+    });
+});
 
 //Restrición para las imagenes 
 function manejarRestriccionesDeImagenes() {
