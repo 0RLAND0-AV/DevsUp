@@ -43,7 +43,7 @@
 
 .modal-header h2 {
     color:var(--secondary-color);
-    margin-left: 50px;
+    margin-left: 30px;
     text-align: center;
 }
 
@@ -78,20 +78,26 @@
 }
 
 .modal-body button {
-    background-color: transparent;
-    box-shadow:3px 3px 5px 1px  var(--secondary-color);
+    background-color:transparent; /* Color de fondo verde */
+    text-align: center;
     color: white;
-    padding: 10px;
+    padding: 5px;
     border: none;
+    width: 100%;
     border-radius: 4px;
     cursor: pointer;
+    transition: all 0.1s;
+    box-shadow: 2px 2px 5px 2px var(--secondary-color);
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 .modal-body button:hover {
     background-color: var(--secondary-color);
+    transform: scale(1.03);
 }
 .modal-body button:active{
     background-color: var(--tertiary-color);
+    transform: scale(0.95);
 }
 .create-account {
     text-align: center;
@@ -143,7 +149,7 @@
   
   .input-box label {
     position: absolute;
-    top: 0%;
+    top: 5%;
     font-size: 14px;
     left: 20px; /* Ajuste para que la etiqueta no colisione con el ícono */
     transform: translateY(-50%);
@@ -180,10 +186,12 @@
     box-shadow: 2px 2px 5px 2px var(--secondary-color);
     background-color:var(--secondary-color); /* Color de fondo más oscuro al pasar el ratón */
 }
-.CrearCuenta:hover{
+.CrearCuenta:active{
     background-color: var(--primary-color);
+    
 }
 .BotonCrearCuenta{
     text-decoration: none;
     color: var(--white);
+    background-color: transparent;
 }
