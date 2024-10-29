@@ -17,7 +17,8 @@ from .views import(
     obtener_provincias,
     obtener_subcategorias,
     eliminar_producto,
-    eliminar_productos
+    eliminar_productos,
+    eliminar_imagenes
 ) # Asegúrate de importar tu vista
 from django.contrib.auth import views as auth_views
 
@@ -33,6 +34,7 @@ urlpatterns = [
     path('eliminar/<int:producto_id>/', eliminar_del_carrito, name='eliminar_del_carrito'),
     path('perfil/mis-materiales/', mis_materiales, name='mis_materiales'),
     path('producto/<int:producto_id>/', detalle_producto, name='detalle_producto'),
+    path('eliminar-imagenes/', eliminar_imagenes, name='eliminar_imagenes'),
     path('subcategorias/<int:categoria_id>/', obtener_subcategorias, name='obtener_subcategorias'),
     path('provincias/<int:departamento_id>/', obtener_provincias, name='obtener_provincias'),
     path('producto/eliminar/<int:producto_id>/',eliminar_producto, name='eliminar_producto'),

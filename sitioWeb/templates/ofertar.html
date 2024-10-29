@@ -16,9 +16,9 @@
         <div class="form-group">
             <label for="titulo">Título del Producto <span class="text-rojo">*</span></label>
             <input class="form-control" type="text" name="titulo" id="titulo" placeholder="Ingresa el título del producto" required autocomplete="off"
-            minlength="10" maxlength="100" onkeypress="return /^[a-zA-Z0-9\s]*$/.test(event.key)" />
+            minlength="3" maxlength="100" onkeypress="return /^[a-zA-Z0-9\s]*$/.test(event.key)" />
             <div class="invalid-feedback">
-                Completa este campo porfavor, minimo 10 caracteres
+                Completa este campo porfavor, minimo 3 caracteres
             </div>
         </div>
         <div class="form-group inline">
@@ -90,12 +90,12 @@
         <div class="form-group inline">
             <div>
                 <label for="precio">Precio <span class="text-rojo">*</span></label>
-                <input class="form-control" type="text" maxlength="6" name="precio" id="precio" placeholder="Precio Total (Bs)" required autocomplete="off" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" min="1" />
+                <input class="form-control" type="number" name="precio" id="precio" placeholder="Precio Total (Bs)" required autocomplete="off" min="1" 
+                    oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? this.value : null" maxlength="6" />
                 <div class="invalid-feedback">
-                    Colocale un precio a tu producto
+                    Colocale un precio a tu producto, mayor a 0
                 </div>
             </div>
-            
         </div>
 
         <div class="custom-file-upload">

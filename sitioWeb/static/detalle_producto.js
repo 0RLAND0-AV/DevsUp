@@ -13,8 +13,8 @@ document.getElementById('editar-producto').addEventListener('click', function() 
     // Mostrar el label de "nuevas-imagenes" y habilitar el input correspondiente
     document.querySelector('label[for="nuevas-imagenes"]').hidden = false;
     // Mostrar el label de "nuevas-imagenes" y habilitar el input correspondiente
-    document.querySelector('label[for="borrar-imagenes"]').hidden = false;
-    
+    document.querySelector('button[for="borrar-imagenes"]').hidden = false;
+
     // Habilitar todos los checkboxes de "imagenes_a_eliminar"
     const checkboxes = document.querySelectorAll('input[name="imagenes_a_eliminar"]');
 
@@ -150,6 +150,89 @@ document.getElementById('departamento-producto').addEventListener('change', func
             });
         });
 });
+
+
+document.getElementById('borrar-imagenes1').addEventListener('click', function(event) {
+    event.preventDefault(); // Evita el envío predeterminado del formulario
+
+    // Obtener los IDs de los checkboxes seleccionados
+    const selectedImages = Array.from(document.querySelectorAll('input[name="imagenes_a_eliminar"]:checked'))
+                                .map(checkbox => checkbox.value);
+
+    if (selectedImages.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Selecciona al menos 1 imagen ',
+            text: 'Por favor marca en el cuadrito las imagenes que quieres eliminar',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#02735E' // Color verde
+        })
+        return;
+    }
+
+    // Confirmación de eliminación
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡Las imágenes seleccionadas se eliminarán!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#666666",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Crear el cuerpo de la solicitud con múltiples entradas de 'imagenes_a_eliminar'
+            const formData = new URLSearchParams();
+            selectedImages.forEach(id => formData.append('imagenes_a_eliminar', id));
+
+            // Realizar la solicitud AJAX
+            fetch('/eliminar-imagenes/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': getCookie('csrftoken') // Agrega el CSRF token
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    Swal.fire({
+                        title: "¡Imágenes eliminadas!",
+                        text: data.message,
+                        icon: "success",
+                        confirmButtonColor: "#03A678"
+                    }).then(() => {
+                        // Aquí puedes actualizar el DOM para reflejar la eliminación sin recargar
+                        selectedImages.forEach(id => {
+                            document.querySelector(`input[value="${id}"]`).closest('li').remove();
+                        });
+                    });
+                } else {
+                    Swal.fire("Error", data.message, "error");
+                }
+            })
+            .catch(error => console.error('Error en la solicitud:', error));
+        }
+    });
+});
+
+// Función para obtener el CSRF token desde las cookies
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 document.getElementById('eliminar-producto').addEventListener('click', function() {
     var url = this.getAttribute('data-url'); // Obtiene la URL del atributo data-url

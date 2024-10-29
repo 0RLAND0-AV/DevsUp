@@ -164,7 +164,8 @@ const inicializarEventos = () => {
             Swal.fire({
             title: "¡Oferta eliminada!",
             text: "Tu publicacion ha sido eliminado correctamente",
-            icon: "success"
+            icon: "success",
+            confirmButtonColor: "#03A678"
         }).then(() => {
             // Redireccionar a la página home.html
             window.location.href = '/';

@@ -300,11 +300,7 @@ def detalle_producto(request, producto_id):
             for imagen in request.FILES.getlist('nuevas_imagenes'):
                 Imagenes.objects.create(producto=producto, ruta=imagen)
 
-        # Eliminar imágenes seleccionadas
-        if request.POST.getlist('imagenes_a_eliminar'):
-            for imagen_id in request.POST.getlist('imagenes_a_eliminar'):
-                imagen = get_object_or_404(Imagenes, id=imagen_id)
-                imagen.delete()
+       
 
         return redirect('detalle_producto', producto_id=producto.id)
 
@@ -318,8 +314,20 @@ def detalle_producto(request, producto_id):
         'departamentos': departamentos,
         'provincias': provincias,
         'estados': estados,
-        'imagenes': producto.imagenes.all(),
+        #'imagenes': producto.imagenes.all(),
     })
+def eliminar_imagenes(request):
+    if request.method == 'POST':
+        imagenes_a_eliminar = request.POST.getlist('imagenes_a_eliminar')
+        
+        for imagen_id in imagenes_a_eliminar:
+            imagen = get_object_or_404(Imagenes, id=imagen_id)
+            imagen.delete()
+        
+        # Retorna una respuesta de éxito como JSON
+        return JsonResponse({'status': 'success', 'message': 'Imágenes eliminadas correctamente.'})
+    
+    return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
 def obtener_subcategorias(request, categoria_id):
     subcategorias = subCategoria.objects.filter(categoria_id=categoria_id).values('id', 'nombre')
