@@ -1,3 +1,5 @@
+
+
 // Habilitar los campos para editar el producto
 document.getElementById('editar-producto').addEventListener('click', function() {
     // Verificar si el botón está siendo clickeado correctamente
@@ -32,6 +34,85 @@ document.getElementById('editar-producto').addEventListener('click', function() 
     // ocultar el botón de eliminar
     document.getElementById("eliminar-producto").hidden = true; // Corrección aquí
 });
+
+//Restrición para las imagenes 
+function manejarRestriccionesDeImagenes() {
+    const inputImagenes = document.getElementById('nuevas-imagenes');
+    const previewContainer = document.querySelector('#imagenes-producto ul');
+    const maxFiles = 8; // Máximo de imágenes permitidas
+    const maxFileSize = 2 * 1024 * 1024; // 2 MB en bytes
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    const validFiles = [];
+    const removedFiles = [];
+
+    // Contar las imágenes ya existentes que vienen de la base de datos
+    const existingImagesCount = document.querySelectorAll('#imagenes-producto ul li img').length;
+    let remainingSlots = maxFiles - existingImagesCount;
+
+    if (!inputImagenes) return;
+
+    // Evento al seleccionar archivos en el input
+    inputImagenes.addEventListener('change', () => {
+        const files = Array.from(inputImagenes.files);
+
+        // Limpiar el contenedor de vista previa de nuevas imágenes
+        previewContainer.innerHTML = "";
+
+        // Verificar si se supera el número máximo de archivos permitidos, considerando las imágenes existentes
+        if (files.length > remainingSlots) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Límite de archivos',
+                text: `Puedes agregar solo ${remainingSlots} imagen(es) más para no exceder el límite de ${maxFiles}.`
+            });
+
+            // Limitar el array de archivos a los primeros espacios disponibles
+            files.splice(remainingSlots);
+        }
+
+        files.forEach(file => {
+            // Validar tipo y tamaño de archivo
+            const isValidType = validTypes.includes(file.type);
+            const isValidSize = file.size <= maxFileSize;
+
+            if (isValidType && isValidSize) {
+                validFiles.push(file);
+
+                // Crear vista previa para cada archivo válido
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const li = document.createElement('li');
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = "Vista previa de imagen";
+                    li.appendChild(img);
+                    previewContainer.appendChild(li);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                removedFiles.push(file.name);
+            }
+        });
+
+        // Mostrar alerta si algunos archivos fueron eliminados
+        if (removedFiles.length > 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Archivos no válidos',
+                text: `Se eliminaron algunos archivos no válidos por formato o tamaño: ${removedFiles.join(', ')}`,
+                footer: 'Solo se aceptan archivos .jpg, .jpeg, .png de máximo 2 MB.'
+            });
+        }
+
+        // Asignar los archivos válidos nuevamente al input
+        const dataTransfer = new DataTransfer();
+        validFiles.forEach(file => dataTransfer.items.add(file));
+        inputImagenes.files = dataTransfer.files;
+    });
+}
+
+// Llama a la función cuando se carga la página
+document.addEventListener('DOMContentLoaded', manejarRestriccionesDeImagenes);
 
 
 // Actualización dinámica de subcategorías según la categoría seleccionada

@@ -15,10 +15,10 @@ Detalle del producto
             <div class="form-groupp">
                 <label for="nombre-producto">Nombre del Producto <span class="text-rojo">*</span></label>
                 <input class="form-controll" type="text" id="nombre-producto" name="nombre" value="{{ producto.nombre }}" required disabled 
-                       minlength="10" maxlength="100" placeholder="Ingresa el nombre del producto" 
-                       onkeypress="return /^[a-zA-Z0-9\s]*$/.test(event.key)">
+                       minlength="3" maxlength="100" placeholder="Ingresa el nombre del producto" 
+                       onkeypress="return /^[a-zA-Z\s]*$/.test(event.key)">
                 <div class="invalid-feedback">
-                    El nombre del producto debe tener entre 10 y 100 caracteres.
+                    El nombre del producto debe tener entre 3 y 100 caracteres.
                 </div>
             </div>
             
@@ -92,7 +92,7 @@ Detalle del producto
             </select>
 
             <label for="estado-producto-activo">¿Producto Activo?</label>
-            <input type="checkbox" id="estado-producto-activo" title="SI LO DESACTIVAS TU PUBLICACION NO SE MOSTRARA EN INICIO" name="estado_producto" {% if producto.estado_producto %}checked{% endif %} disabled>
+            <input type="checkbox" id="estado-producto-activo" title="Si lo desactivas tu publicación no se mostrara" name="estado_producto" {% if producto.estado_producto %}checked{% endif %} disabled>
             
             <div id="imagenes-producto">
                 <div id="imagenes-titulo">
@@ -133,5 +133,6 @@ Detalle del producto
 
 {% block extra_js %}
     <script src="{% static 'perfil.js' %}"></script>
+    <script src= "{% static 'detalle_producto.js' %}"></script>
     
 {% endblock %}
