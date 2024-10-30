@@ -167,24 +167,59 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function updateCartCount() {
-    // Contar los elementos con la clase `.cart-item` (productos en el carrito)
-    const cartItems = document.querySelectorAll(".cart-item");
-    const cartCount = cartItems.length;
-
-    // Seleccionar el elemento `span` dentro del botón del carrito
     const cartCountDisplay = document.querySelector(".dropbtn span");
     
-    // Actualizar el contenido del `span` con la cantidad de productos
-    cartCountDisplay.textContent = cartCount;
+    if (cartCountDisplay) {
+        const cartCount = carrito.length; // Obtener el número de productos en el carrito
+        cartCountDisplay.textContent = cartCount; // Actualizar el número en el contador
 
-    // Asegurarse de que el estilo se mantenga
-    cartCountDisplay.style.backgroundColor = "#FFA500"; // Color naranja
-    cartCountDisplay.style.color = "white";
-    cartCountDisplay.style.fontWeight = "bold";
-    cartCountDisplay.style.fontSize = "14px";
-    cartCountDisplay.style.padding = "2px 6px";
-    cartCountDisplay.style.borderRadius = "50%";
-    cartCountDisplay.style.marginLeft = "8px";
-    cartCountDisplay.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
-    cartCountDisplay.style.display = "inline-block";
+        // Asegura el estilo
+        cartCountDisplay.style.backgroundColor = "#FFA500";
+        cartCountDisplay.style.color = "white";
+        cartCountDisplay.style.fontWeight = "bold";
+        cartCountDisplay.style.fontSize = "14px";
+        cartCountDisplay.style.padding = "2px 6px";
+        cartCountDisplay.style.borderRadius = "50%";
+        cartCountDisplay.style.marginLeft = "8px";
+        cartCountDisplay.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
+        cartCountDisplay.style.display = "inline-block";
+    }
+}
+
+function actualizarPopup(productos) {
+    const cartPopup = document.getElementById('cart-popup');
+    cartPopup.innerHTML = ''; // Limpiar contenido previo
+
+    cartPopup.innerHTML += `<h3>Carrito de Compras</h3>`;
+
+    if (!Array.isArray(carrito) || carrito.length === 0) {
+        cartPopup.innerHTML += `<p>No hay productos en el carrito.</p>`;
+    } else {
+        let total = 0;
+
+        carrito.forEach(id => {
+            const producto = productos.find(p => p.id === id);
+            if (producto) {
+                total += producto.precio;
+                cartPopup.innerHTML += `
+                    <div class="cart-item" id="cartItems" data-precio="${producto.precio}">
+                        <span>${producto.nombre} - ${producto.precio.toFixed(2)} Bs</span>
+                        <button class="remove-from-cart" data-id="${producto.id}">Eliminar</button>
+                    </div>
+                `;
+            }
+        });
+
+        cartPopup.innerHTML += `<p class="cart-total">Total: <strong id="cart-total">${total.toFixed(2)}</strong> Bs</p>`;
+
+        const botonesEliminar = cartPopup.querySelectorAll('.remove-from-cart');
+        botonesEliminar.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const productId = this.getAttribute('data-id');
+                eliminarDelCarrito(productId);
+            });
+        });
+    }
+
+    updateCartCount(); // Llama después de actualizar el popup
 }
