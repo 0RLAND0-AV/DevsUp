@@ -47,11 +47,13 @@ def login_view(request):
     
     return render(request, 'base.html')
 
+# se añadio telefono con el valor de NumTelefono para mandarlo a la BD(celular)
 def registroView(request):
     if request.method == 'POST':
         # Obtener los datos del formulario
         nombre = request.POST.get('username')
         correo = request.POST.get('email')
+        telefono = request.POST.get('NumTelefono')
         contraseña = request.POST.get('password')
         confirmar_contraseña = request.POST.get('confirmPassword')
 
@@ -65,7 +67,7 @@ def registroView(request):
             return redirect('registro')
 
         # Crear y guardar el usuario en la base de datos
-        usuario = Usuario(nombre=nombre, correo=correo, contraseña=contraseña)
+        usuario = Usuario(nombre=nombre, correo=correo, contraseña=contraseña, celular=telefono)
         try:
             usuario.save()
             messages.success(request, 'Usuario registrado exitosamente.')
