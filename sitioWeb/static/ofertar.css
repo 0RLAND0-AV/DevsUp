@@ -181,8 +181,8 @@ input[type="file"] {
     
     .container2 {
         order:2;
-        margin-top: 7em;
-        margin-bottom:3em;    
+        margin-top: auto;
+        margin-bottom:3.5em;    
     }
     .form-group.inline {
         display: block; /* Usar flexbox para alinear elementos en línea */
