@@ -39,7 +39,6 @@
     color: #fff; /* Cambia el color del texto de los enlaces a blanco */
     text-decoration: none; /* Opcional: elimina el subrayado de los enlaces */
     display: block;
-    padding-left: 10px;
     width: 100%;
     box-sizing: border-box;
     
@@ -560,14 +559,20 @@ label {
     }
 
     .menu-perfil {
+        width: 10%;
+        height: 10%;
         order:1;
         top: -43px;
     }
-
+    .lista-perfil li {
+        width: 50%; /* Margen reducido para enlaces */
+        padding: 0%;
+        margin-right: 0%;
+    }
     .menu-perfil img {
         
-        width: 5rem;
-        height: 5rem;
+        width: 3rem;
+        height: 3.5rem;
     }
     .profile-config{
         order:2;
@@ -577,7 +582,6 @@ label {
         
         width: 100%; /* Asegúrate de que ocupe todo el ancho disponible */
         margin: 0; /* Ajusta márgenes si es necesario */
-        padding: 0 0 0 1rem; /* Ajustar padding en pantallas pequeñas */
     }
 
     /* Botones más pequeños */

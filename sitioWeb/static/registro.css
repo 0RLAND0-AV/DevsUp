@@ -249,3 +249,39 @@
   .CancelarRegistro:active{
     background-color: var(--tertiary-color);
   }
+
+
+  /* notificacion cuando las contraseñas no coinciden */
+  
+  .toast-container {
+    position: fixed;
+    top: 50%; /* Centrado verticalmente */
+    left: 50%; /* Centrado horizontalmente */
+    transform: translate(-50%, -50%); /* Ajuste para el centro exacto */
+    z-index: 9999; /* Asegúrate de que esté por encima de otros elementos */
+    text-align: center; /* Centra el texto dentro del contenedor */
+}
+
+.toast {
+    background-color: #333; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 10px 20px;
+    margin: 5px 0; /* Espaciado entre notificaciones */
+    border-radius: 5px;
+    opacity: 0; /* Comienza invisible */
+    transition: opacity 0.5s, transform 0.5s; /* Transiciones para animación */
+    transform: translateY(-10px); /* Para que se mueva un poco hacia arriba */
+}
+
+.toast.success {
+    background-color: #28a745; /* Color de fondo para éxito */
+}
+
+.toast.error {
+    background-color: #dc3545; /* Color de fondo para error */
+}
+
+.toast.show {
+    opacity: 1; /* Hacer visible */
+    transform: translateY(0); /* Posición final */
+}

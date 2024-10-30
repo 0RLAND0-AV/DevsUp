@@ -1,6 +1,6 @@
 /* Contenedor principal */
 #detalle-producto-container {
-    margin-left: 350px;
+
     max-width: 900px;
     width: 70%;
     padding: 30px;
@@ -8,7 +8,7 @@
     border-radius: 10px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
-    margin-top: 50px;
+    margin-left: 20%;
 }
 
 .form-groupp {
@@ -250,7 +250,6 @@ button:hover {
         display: flex;
         flex-direction: column; 
         padding: 0;
-        margin-top: 120px;
         
     }
 
@@ -263,9 +262,11 @@ button:hover {
     
 
     #detalle-producto-container {
+        width:95%;
         order:2;
         
-        margin-left: 20px;
+        margin: auto;
+        margin-bottom: 4.5em;
         padding: 15px;
         
         
