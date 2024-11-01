@@ -285,3 +285,84 @@
     opacity: 1; /* Hacer visible */
     transform: translateY(0); /* Posición final */
 }
+
+/* Media Queries para dispositivos móviles */
+@media (max-width: 768px) {
+  .container {
+    width: 80%;
+    height: auto; /* Cambia la altura para que se ajuste al contenido */
+  }
+
+  .left-section {
+    position: absolute;
+    right: 5%;
+    top: 30%;
+    width: 50%;
+    height: 45%; /* Cambia la altura para que se ajuste al contenido */
+  }
+  ion-icon {
+    position: absolute;
+    top: -20px;
+    right: 99%;
+    padding: 5px;
+    height: 60px;
+    width: 15px;
+  }
+  
+  .right-section {
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    width: 63%;
+    padding: 20px; /* Reduce el padding para dispositivos móviles */
+    transition: all 0.5s;
+  }
+  .right-section:hover{
+    width: 56%;
+  }
+
+  .image {
+    width: 70px; /* Reduce el tamaño de la imagen */
+    height: 70px; /* Reduce el tamaño de la imagen */
+  }
+  .image:hover{
+    width: 80px;
+    height: 80px;
+  }
+
+  .login-box h2 {
+    font-size: 18px; /* Reduce el tamaño de la fuente del título */
+    padding: 1%;
+    margin: 1%;
+  }
+ .input-box{
+  margin-bottom: 10px;
+ }
+  .input-box input {
+    padding: 10px; /* Reduce el padding de los inputs */
+    font-size: 12px; /* Reduce el tamaño de la fuente de los inputs */
+  }
+ label{
+  font-size: 10px;
+ }
+ a{
+  font-size: 12px;
+ }
+  .btn {
+    padding: 2px; /* Reduce el padding del botón */
+    font-size: 10px; /* Reduce el tamaño de la fuente del botón */
+  }
+.texto{
+  height: 170px;
+  width: 94px;
+  margin-bottom: 0px;
+  margin-left: 5px;
+}
+  .description {
+    font-size: 11px; /* Reduce el tamaño de la descripción */
+  }
+
+  .toast {
+    padding: 2px 4px; /* Ajusta el padding de la notificación */
+  }
+}
