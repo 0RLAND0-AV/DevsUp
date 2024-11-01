@@ -1,2 +1,1 @@
-# DevsUp
-Proyecto de Ing.Software UMSS
+este es el readme

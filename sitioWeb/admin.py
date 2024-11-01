@@ -3,14 +3,14 @@ from .models import Usuario ,Categoria, subCategoria , Producto , Imagenes ,Depa
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
-    fields=["nombre","contraseña","correo","celular","foto","estadoUsuario"]
-    list_display =["nombre","correo"] #lo que se va mostrar
+    fields=["nombre","contraseña","correo","celular","foto","estadoUsuario","billetera"]
+    list_display =["nombre","correo","billetera"] #lo que se va mostrar
 admin.site.register(Usuario,UserAdmin)#forma para registrar 1
 
 
 @admin.register(Categoria)#forma para registrar 2
 class CategoriaAdmin(admin.ModelAdmin):#lo que se puede editar
-    fields=["nombre" ,""]
+    fields=["nombre"]
     list_display =["nombre"]
 
 @admin.register(subCategoria)#forma para registrar 2
@@ -20,7 +20,7 @@ class subCategoriaAdmin(admin.ModelAdmin):#lo que se puede editar
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    fields=["nombre","descripcion","precio","usuario","subcategoria","provincia","estado"]
+    fields=["nombre","estado_producto","descripcion","precio","usuario","subcategoria","provincia","estado"]
     list_display =["nombre","precio","subcategoria"]
 
 @admin.register(Imagenes)

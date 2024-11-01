@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ge8o$t)qef(c(il*pb)h43^3%n+r^_kqf=4^0ud%uz*u-%c*!0'
+SECRET_KEY = 'django-insecure-5s%ua8)e+b1a88(20+61bbj@_qsi^4_(-3c(r+x-#p=4-bjxv@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # importante debemos registrar las app que creemos
-    'sitioWeb.apps.SitiowebConfig' #ubicacion "nombredelaApp.programa.metodo"
+    'sitioWeb.apps.SitiowebConfig', #ubicacion "nombredelaApp.programa.metodo"
 ]
 
 MIDDLEWARE = [
@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'DevsUp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'platafomaWebDB',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
